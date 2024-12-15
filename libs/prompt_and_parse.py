@@ -2,45 +2,51 @@ from typing import List,Dict,Any
 from models.models import DocumentAnalysisResponce,EntityModel,RelationModel,AnomalyModel,GraphVizModel
 import json
 
-def create_extract_prompt(documents:List[str])->str:
-    prompt = """Analyze the following documents and extract:
-    1.Entities (people, organization,locations,dates,amounts etc.)
-    2.Relationships between entities
-    3.Potential anomalies or inconsistencies
-    Format your response as a JSON with the following structure:
-    {
-    "entities":[
-    {
-    "value":"entity_name",
-    "type":"PERSON/ORG/LOCATION/DATE/MOUNT",
-    "context":"relevant context from document",
-    "confidence":0.9
-    }
+def create_extract_prompt(documents: List[str]) -> str:
+    prompt = """You are a data extraction expert. Extract all relevant information from these documents and format it as JSON.
+
+Follow these steps:
+1. Find ALL:
+   - PEOPLE (names of individuals)
+   - ORGANIZATIONS (companies, agencies, groups)
+   - LOCATIONS (places, addresses)
+   - DATES (any time references)
+   - AMOUNTS (money, quantities)
+
+2. Identify how these entities are connected to each other
+
+3. Look for any unusual patterns or inconsistencies
+
+Here's an example of good extraction:
+{
+    "entities": [
+        {"value": "John Smith", "type": "PERSON", "context": "CEO of company", "confidence": 0.9},
+        {"value": "Acme Corp", "type": "ORG", "context": "Main company discussed", "confidence": 0.9},
+        {"value": "New York", "type": "LOCATION", "context": "Company headquarters", "confidence": 0.9}
     ],
-    "relations":[
-    {
-    "source":"entity1",
-    "target":"entity2",
-    "type":"WORKS_FOR/LOCATED_IN/ASSOCIATED_WITH",
-    "confidence":0.8
-    }
+    "relations": [
+        {"source": "John Smith", "target": "Acme Corp", "type": "WORKS_FOR", "confidence": 0.8}
     ],
-     "anomalies": [
+    "anomalies": [
         {
-            "description": "description of the anomaly",
-            "severity": "LOW/MEDIUM/HIGH",
+            "description": "Unusual pattern found",
+            "severity": "HIGH",
             "related_entities": ["entity1", "entity2"],
-            "potential_impact": "potential impact description"
+            "potential_impact": "Describes the possible impact"
         }
     ]
-    }
-    Documents to analyze:
-"""
-    for i,doc in enumerate(documents,1):
-        prompt+=f"\nDocument {i}:\n{doc}\n"
-    prompt+="\nProvide only the JSON response without any additional text."
+}
 
+Documents to analyze:
+"""
+    for i, doc in enumerate(documents, 1):
+        prompt += f"\nDocument {i}:\n{doc}\n"
+    
+    prompt += "\nProvide ONLY the JSON response using the exact format shown above. Include confidence scores for all entities and relations."
+    
     return prompt
+
+
 
 def parse_responce(response:Dict[str,Any])->DocumentAnalysisResponce:
     try:
