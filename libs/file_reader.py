@@ -1,4 +1,4 @@
-from typing import List, Generator, Union
+from typing import List, Generator, Union, Dict, Any
 import json
 import csv
 import chardet
@@ -10,14 +10,18 @@ import xml.etree.ElementTree as ET
 import zipfile
 import openpyxl
 import email
+from libs.case_processor import CaseProcessor
 
+
+import logging
+logger = logging.getLogger(__name__)
 
 class UniversalDocumentReader:
-    
     def __init__(self, file_content: bytes, filename: str):
         self.content = file_content
         self.filename = filename.lower()
         self.text_content = None
+        self.case_processor = CaseProcessor()
     
     def detect_encoding(self) -> str:
         result = chardet.detect(self.content)
@@ -83,19 +87,39 @@ class UniversalDocumentReader:
         except Exception as e:
             yield f"Error reading Excel file: {str(e)}"
     
-    def read_pdf_file(self) -> Generator[str, None, None]:
-
+    def read_pdf_file(self) -> Dict[str, Any]:
         try:
-            from io import BytesIO
             pdf_reader = PyPDF2.PdfReader(BytesIO(self.content))
+            pages = []
+            all_cases = []
+            
             for page_num in range(len(pdf_reader.pages)):
                 page = pdf_reader.pages[page_num]
                 text = page.extract_text()
-                for line in text.splitlines():
-                    if line.strip():
-                        yield line.strip()
+                
+                if not text.strip():
+                    continue
+                    
+                lines = [line.strip() for line in text.splitlines() if line.strip()]
+                
+                cases = self.case_processor.process_document(lines)
+                
+                for case in cases:
+                    case['page_number'] = page_num + 1
+                    all_cases.append(case)
+            
+            if not all_cases:
+                raise ValueError("No valid content found in PDF")
+                
+            return {
+                'document_type': 'PDF',
+                'total_pages': len(pdf_reader.pages),
+                'cases': all_cases
+            }
+            
         except Exception as e:
-            yield f"Error reading PDF: {str(e)}"
+            logger.error(f"Error reading PDF: {str(e)}")
+            raise
     
     def read_docx_file(self) -> Generator[str, None, None]:
 
@@ -164,3 +188,27 @@ class UniversalDocumentReader:
             yield from reader()
         except Exception as e:
             yield f"Error processing file: {str(e)}"
+
+    def process_document(self) -> Dict[str, Any]:
+        try:
+            if self.filename.endswith('.pdf'):
+                return self.read_pdf_file()
+                
+            lines = list(self.read_lines())
+            if not lines:
+                raise ValueError(f"No content found in file: {self.filename}")
+                
+            cases = self.case_processor.process_document(lines)
+            
+            for case in cases:
+                case['page_number'] = 1
+                
+            return {
+                'document_type': self.filename.split('.')[-1].upper(),
+                'total_pages': 1,
+                'cases': cases
+            }
+            
+        except Exception as e:
+            logger.error(f"Error processing document: {str(e)}")
+            raise
