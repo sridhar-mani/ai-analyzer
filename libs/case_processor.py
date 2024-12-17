@@ -8,7 +8,7 @@ class CaseProcessor:
         current_case = []
         current_headline = ""
         
-        headline_pattern = r'^[A-Z][A-Z\s]+(?=\n|$)'
+        headline_pattern = r'^[A-Z][a-z]+(?:\s+[A-Z][a-z]+)*(?=\n|$)'
         
         for line in content:
             if not line.strip():

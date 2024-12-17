@@ -22,7 +22,7 @@ const EntitySection: React.FC<EntitySectionProps> = ({
           {entityTypes.map((type) => (
             <span
               key={type}
-              className="px-2 py-1 text-xs rounded-full bg-gray-100 text-white"
+              className="px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-900"
             >
               {type}
             </span>

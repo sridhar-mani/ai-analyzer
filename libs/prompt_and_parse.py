@@ -14,173 +14,184 @@ from models.models import (
 logger = logging.getLogger(__name__)
 
 def create_extract_prompt(documents: List[str]) -> str:
-    prompt = """Analyze the provided text to build a comprehensive relationship network. Identify and categorize entities (persons, organizations, emails, phone numbers, locations, tools, and activities) and relationships (person-to-person, person-to-organization, activity-to-tool, communication links, etc.). Structure the response in a format suitable for Cytoscape visualization, including nodes, edges, and anomalies.
+    prompt = """Extract and list the key entities (persons, organizations, phone numbers, emails) and their direct relationships (e.g., 'Carlos Ramirez' is 'CO-CONSPIRATOR' with 'Elena Torres') from the provided text. Present the data in a JSON format compatible with Cytoscape, including node identifiers, labels, and edge types.
 
-🎯 Desired Output Format
-1. Entities
-2. Relationships
-3. Anomalies
-4. Graph Data (Nodes and Edges)
-5. Case Information
+Expected Output:
 
-📋 Output Format (Example)
-json
-Copy code
 {
-  "case_info": {
-    "case_number": "56789",
-    "case_title": "FBI and Interpol Expose Large-Scale Cyber Fraud Network",
-    "date": "2024-03-15T14:00:00Z",
-    "headline": "FBI and Interpol Expose Large-Scale Cyber Fraud Network",
-    "type": "Cyber Fraud Investigation",
-    "page_number": 1
-  },
-  "entities": [
+  "nodes": [
     {
-      "id": "e1",
-      "type": "PERSON",
-      "value": "Brenda Wallace",
-      "description": "62-year-old fraud victim who lost her entire savings.",
-      "context": "\"I lost my entire savings because I trusted that email,\" said 62-year-old Brenda Wallace.",
-      "confidence": 0.95
+      "data": {
+        "id": "Carlos Ramirez",
+        "label": "Carlos Ramirez",
+        "type": "Person",
+        "location": "New York",
+        "contact": "+1-555-888-9999",
+        "email": "carlos.ramirez@example.com",
+        "affiliation": "XYZ Corp",
+        "role": "Manager"
+      }
     },
     {
-      "id": "e2",
-      "type": "PERSON",
-      "value": "Raj Patel",
-      "description": "Victim of the fraud network who expressed frustration and called for justice.",
-      "context": "Another victim, Raj Patel, remarked, \"I hope these criminals face justice.\"",
-      "confidence": 0.9
+      "data": {
+        "id": "Elena Torres",
+        "label": "Elena Torres",
+        "type": "Person",
+        "location": "Los Angeles",
+        "contact": "+1-555-666-7777",
+        "email": "elena.torres@example.com",
+        "affiliation": "ABC Ltd",
+        "role": "Analyst"
+      }
     },
     {
-      "id": "e3",
-      "type": "ORGANIZATION",
-      "value": "FBI",
-      "description": "Federal Bureau of Investigation that jointly exposed the cyber fraud network.",
-      "context": "A large-scale cyber fraud network was exposed in a joint operation by the FBI...",
-      "confidence": 0.95
+      "data": {
+        "id": "Kelly Johnson",
+        "label": "Kelly Johnson",
+        "type": "Person",
+        "location": "Chicago",
+        "contact": "+1-555-444-5555",
+        "email": "kelly.johnson@example.com",
+        "affiliation": "DEF Inc",
+        "role": "Consultant"
+      }
     },
     {
-      "id": "e4",
-      "type": "ORGANIZATION",
-      "value": "Interpol",
-      "description": "International police organization collaborating with the FBI to investigate fraud.",
-      "context": "A large-scale cyber fraud network was exposed in a joint operation by the FBI and Interpol...",
-      "confidence": 0.9
+      "data": {
+        "id": "Paul Simmons",
+        "label": "Paul Simmons",
+        "type": "Person",
+        "location": "San Francisco",
+        "contact": "+1-555-222-3333",
+        "email": "paul.simmons@example.com",
+        "affiliation": "GHI LLC",
+        "role": "Director"
+      }
     },
     {
-      "id": "e5",
-      "type": "EMAIL",
-      "value": "secure@banking-alerts.com",
-      "description": "Phishing email address used in the scam.",
-      "context": "The scam involved phishing emails sent from addresses like secure@banking-alerts.com...",
-      "confidence": 0.95
+      "data": {
+        "id": "Agent Rebecca Cruz",
+        "label": "Agent Rebecca Cruz",
+        "type": "Person",
+        "location": "Washington, D.C.",
+        "contact": "+1-555-000-1111",
+        "email": "rebecca.cruz@dea.gov",
+        "affiliation": "DEA",
+        "role": "Agent"
+      }
     },
     {
-      "id": "e6",
-      "type": "EMAIL",
-      "value": "cybercrime@justice.org",
-      "description": "Fraud reporting email for victims to report scams.",
-      "context": "Suspected fraud can be reported at cybercrime@justice.org...",
-      "confidence": 0.9
-    },
-    {
-      "id": "e7",
-      "type": "PHONE",
-      "value": "+1-800-123-4567",
-      "description": "Fraudulent customer service number where victims were tricked into sharing sensitive information.",
-      "context": "These emails tricked users into calling fraudulent customer service numbers like +1-800-123-4567...",
-      "confidence": 0.95
+      "data": {
+        "id": "DEA",
+        "label": "DEA",
+        "type": "Organization",
+        "location": "Washington, D.C.",
+        "contact": "+1-800-DRUGSTOP",
+        "email": "dea.tips@agency.gov",
+        "affiliation": null,
+        "role": null
+      }
     }
   ],
-  "relationships": [
+  "edges": [
     {
-      "source": "Brenda Wallace",
-      "target": "FBI",
-      "type": "INVESTIGATED_BY",
-      "confidence": 0.9,
-      "evidence": "A large-scale cyber fraud network was exposed in a joint operation by the FBI.",
-      "strength": "STRONG"
+      "data": {
+        "source": "Carlos Ramirez",
+        "target": "Elena Torres",
+        "type": "CO-CONSPIRATOR",
+        "relationship_strength": "High",
+        "discovery_date": "2024-12-01"
+      }
     },
     {
-      "source": "Brenda Wallace",
-      "target": "+1-800-123-4567",
-      "type": "CONTACTED",
-      "confidence": 0.85,
-      "evidence": "Victims were tricked into calling fraudulent customer service numbers like +1-800-123-4567.",
-      "strength": "MEDIUM"
-    }
-  ],
-  "anomalies": [
+      "data": {
+        "source": "DEA",
+        "target": "Carlos Ramirez",
+        "type": "ARRESTED",
+        "relationship_strength": "N/A",
+        "discovery_date": "2024-12-10"
+      }
+    },
     {
-      "description": "Use of burner phones by accomplices in the scam.",
-      "severity": "HIGH",
-      "related_entities": [
-        "+1-555-987-6543",
-        "+1-555-456-7890"
-      ],
-      "potential_impact": "These burner phones may point to further fraudulent activities and hidden criminal networks."
+      "data": {
+        "source": "DEA",
+        "target": "Elena Torres",
+        "type": "ARRESTED",
+        "relationship_strength": "N/A",
+        "discovery_date": "2024-12-10"
+      }
+    },
+    {
+      "data": {
+        "source": "DEA",
+        "target": "DEA",
+        "type": "MONITORED_USING",
+        "relationship_strength": "N/A",
+        "discovery_date": "2024-12-05"
+      }
+    },
+    {
+      "data": {
+        "source": "Carlos Ramirez",
+        "target": "+1-555-888-9999",
+        "type": "USED_FOR_COMMUNICATION",
+        "relationship_strength": "High",
+        "discovery_date": "2024-12-02"
+      }
+    },
+    {
+      "data": {
+        "source": "Elena Torres",
+        "target": "+1-555-666-7777",
+        "type": "USED_FOR_COMMUNICATION",
+        "relationship_strength": "Medium",
+        "discovery_date": "2024-12-03"
+      }
+    },
+    {
+      "data": {
+        "source": "DEA",
+        "target": "dea.tips@agency.gov",
+        "type": "CONTACT",
+        "relationship_strength": "High",
+        "discovery_date": "2024-12-01"
+      }
+    },
+    {
+      "data": {
+        "source": "DEA",
+        "target": "+1-800-DRUGSTOP",
+        "type": "CONTACT",
+        "relationship_strength": "High",
+        "discovery_date": "2024-12-01"
+      }
     }
-  ],
-  "graph_data": {
-    "nodes": [
-      { "id": "e1", "type": "PERSON", "value": "Brenda Wallace" },
-      { "id": "e2", "type": "PERSON", "value": "Raj Patel" },
-      { "id": "e3", "type": "ORGANIZATION", "value": "FBI" },
-      { "id": "e4", "type": "ORGANIZATION", "value": "Interpol" },
-      { "id": "e5", "type": "EMAIL", "value": "secure@banking-alerts.com" },
-      { "id": "e6", "type": "EMAIL", "value": "cybercrime@justice.org" },
-      { "id": "e7", "type": "PHONE", "value": "+1-800-123-4567" }
-    ],
-    "edges": [
-      { "source": "e1", "target": "e3", "type": "INVESTIGATED_BY", "strength": "STRONG" },
-      { "source": "e1", "target": "e7", "type": "CONTACTED", "strength": "MEDIUM" }
-    ]
-  }
+  ]
 }
-🔍 Guidelines for OpenHermes
-1. Extract & categorize entities:
-
-Types: Persons, Organizations, Emails, Phone Numbers, Tools, Activities.
-Context: Provide context from the text as evidence.
-Confidence: Measure confidence level for each entity.
-2. Relationships:
-
-Form clear relationships (e.g., PERSON-to-ORGANIZATION, PERSON-to-PHONE, EMAIL-to-ORGANIZATION, etc.).
-Use relationship types such as "INVESTIGATED_BY", "TARGETED_BY", "CONTACTED", "REPORTED_TO", "ASSOCIATED_WITH", etc.
-Provide evidence (quotes from the text) for relationships.
-3. Anomalies:
-
-Highlight anomalies (like burner phones) and their potential impact.
-Link anomalies to related entities and categorize severity (HIGH, MEDIUM, LOW).
-4. Graph Data:
-
-Nodes: Each entity is a node with a unique ID, type, and value. We need the nodes to be a array with the each node be a object with that specific entities information.
-Edges: Each relationship is an edge, showing source, target, type, and strength. The edges is also a array with objects where it has the source and target. source is the person who is main and the target is who is related to by the relation.
-
-5. Case Information:
-
-Include case details (case number, title, date, etc.).
 
 
-analyse this data and give responce as the same previous array json structure above containing the entities, relationships, anomalies, graph with nodes and edges, case info as per the structure not missing any most importantly the graph nodes and edges that are very important in the end result which is the inference from the entities,relations and anomalies: 
+Explanation:
 
-"""
+Nodes: Each key entity is represented with a unique identifier (id) and a label (label).
+
+Edges: Relationships between entities are defined with source and target nodes, along with a type indicating the nature of the relationship. 
+
+I want you to analyse the below data and convert into the structure mentioned above:"""
 
     # Add documents with clear separation
     for i, doc in enumerate(documents, 1):
         print(doc)
-        prompt += f"\n[Document {i}]\n{doc}\n"
+        prompt += f"\n{doc}\n"
     
-    prompt += """\nCRITICAL REMINDERS:
-1. NO isolated nodes allowed
-2. EVERY entity must connect to at least 2 others
-3. ALL relationships must have evidence
-4. CREATE implicit relationships when logical
-5. ENSURE complete network connectivity
-6. USE only specified relationship types
-7. INCLUDE full context in evidence
-8. RETURN only valid JSON"""
+#     prompt += """\nCRITICAL REMINDERS:
+# 1. NO isolated nodes allowed
+# 2. EVERY entity must connect to at least 2 others
+# 3. ALL relationships must have evidence
+# 4. CREATE implicit relationships when logical
+# 5. ENSURE complete network connectivity
+# 6. USE only specified relationship types
+# 7. INCLUDE full context in evidence
+# 8. RETURN only valid JSON"""
     
     return prompt
 

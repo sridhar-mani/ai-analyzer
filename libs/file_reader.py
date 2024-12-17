@@ -5,13 +5,13 @@ import chardet
 from io import StringIO,BytesIO
 import pandas as pd
 import docx
-import PyPDF2
+import pdfplumber
 import xml.etree.ElementTree as ET
 import zipfile
 import openpyxl
 import email
 from libs.case_processor import CaseProcessor
-
+import re
 
 import logging
 logger = logging.getLogger(__name__)
@@ -86,28 +86,65 @@ class UniversalDocumentReader:
                     yield ', '.join(str(cell) for cell in row if cell is not None)
         except Exception as e:
             yield f"Error reading Excel file: {str(e)}"
+
+    def is_headline(self,line):
+        words = line.strip().split()
+        if not words:
+            return False
+
+  
+        content_starters = ["A ", "The ", "In ", "And ", "But "]
+        if any(line.startswith(starter) for starter in content_starters):
+            return False
+
+   
+        if any(x in line for x in ['"', '@', '+1-', '(', ')']):
+            return False
+
+      
+        small_words = {'a', 'an', 'and', 'as', 'at', 'but', 'by', 'for', 'in', 'of', 'on', 'or', 'the', 'to', 'with'}
+        for word in words:
+            if word.lower() not in small_words and not word[0].isupper():
+                return False
+
+        return True
     
     def read_pdf_file(self) -> Dict[str, Any]:
         try:
-            pdf_reader = PyPDF2.PdfReader(BytesIO(self.content))
-            pages = []
+            pages_fin = {}
             all_cases = []
             
-            for page_num in range(len(pdf_reader.pages)):
-                page = pdf_reader.pages[page_num]
-                text = page.extract_text()
-                
-                if not text.strip():
-                    continue
+            with pdfplumber.open(self.content) as pdf:
+                for i,page in enumerate(pdf.pages):
+                    text = page.extract_text(
+                    text_kwargs={
+                        'layout_mode': 'layout',  # This helps preserve layout
+                        'expand_ligatures': True,  # This can help with certain font issues
+                    }
+                )
                     
-                lines = [line.strip() for line in text.splitlines() if line.strip()]
+                    if not text.strip():
+                        continue
+
+                    head=''
+                    content=[]
+                    for i,line in enumerate(text,1):
+                        if self.is_headline(line):
+                            head+=line
+                        else:
+                            content.append(line)
+
+                    pages_fin[i]= {
+                        "headline":head,
+                        "content":content
+                    }
+
+                    cases = self.case_processor.process_document(lines)
+                    
+                    for case in cases:
+                        case['page_number'] = page_num + 1
+                        all_cases.append(case)
                 
-                cases = self.case_processor.process_document(lines)
-                
-                for case in cases:
-                    case['page_number'] = page_num + 1
-                    all_cases.append(case)
-            
             if not all_cases:
                 raise ValueError("No valid content found in PDF")
                 
