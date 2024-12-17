@@ -2,22 +2,24 @@ import pdfplumber
 import re
 
 def read_pdf_content(file_path):
-try:
-pages_content = []
-with pdfplumber.open(file_path) as pdf:
-for page in pdf.pages:
-text = page.extract_text()
-lines = [line.strip() for line in text.splitlines() if line.strip()]
-pages_content.append(lines)
-return pages_content
-except Exception as e:
-print(f"Error reading PDF: {str(e)}")
-return None
+    try:
+        pages_content = []
+        with pdfplumber.open(file_path) as pdf:
+            for page in pdf.pages:
+                text = page.extract_text()
+                lines = [line.strip() for line in text.splitlines() if line.strip()]
+                pages_content.append(lines)
+        return pages_content
+    except Exception as e:
+        print(f"Error reading PDF: {str(e)}")
+        return None
+
+
 
 def process_pdf_content(file_path):
-content = read_pdf_content(file_path)
-if not content:
-return None
+    content = read_pdf_content(file_path)
+    if not content:
+        return None
 
     result = {}
     pending_headline = ""
@@ -52,9 +54,9 @@ return None
 
     return result
 
-if **name** == "**main**":
-file_path = "articles.pdf"
-processed_content = process_pdf_content(file_path)
+if __name__ == "__main__":
+    file_path = "articles.pdf"
+    processed_content = process_pdf_content(file_path)
 
     if processed_content:
         for page_num, data in processed_content.items():

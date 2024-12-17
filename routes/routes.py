@@ -23,17 +23,17 @@ async def analyze_doc(files: List[UploadFile] = File(...)) -> List[DocumentAnaly
                 logger.debug(f"Processing file: {f.filename}")
                 content = await f.read()
                 
-                reader = UniversalDocumentReader(content, f.filename)
+                reader = UniversalDocumentReader(content, f.filename,f.file)
                 document_data = reader.process_document()
                 logger.debug(f"Document data: {document_data}")
                 
                 for case in document_data.get('cases', []):
                     try:
                         logger.debug(f"Processing case: {case}")
-                        case_content = case['original']['content']
-                        case_headline = case['original']['headline']
+                        case_content = document_data['cases'][case]['content']
+                        case_headline = document_data['cases'][case]['headline']
                         
-                        prompt = create_extract_prompt([case_content])
+                        prompt = create_extract_prompt(case_headline,case_content)
                         logger.debug(f"Created prompt for case: {case_headline}")
                         
                         response = ollama.chat(

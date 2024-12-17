@@ -17,11 +17,12 @@ import logging
 logger = logging.getLogger(__name__)
 
 class UniversalDocumentReader:
-    def __init__(self, file_content: bytes, filename: str):
+    def __init__(self, file_content: bytes, filename: str, file: Any):
         self.content = file_content
         self.filename = filename.lower()
         self.text_content = None
         self.case_processor = CaseProcessor()
+        self.file = file
     
     def detect_encoding(self) -> str:
         result = chardet.detect(self.content)
@@ -111,47 +112,42 @@ class UniversalDocumentReader:
     
     def read_pdf_file(self) -> Dict[str, Any]:
         try:
-            pages_fin = {}
-            all_cases = []
+            cases = {}
             
-            with pdfplumber.open(self.content) as pdf:
+            with pdfplumber.open(self.file) as pdf:
                 for i,page in enumerate(pdf.pages):
-                    text = page.extract_text(
-                    text_kwargs={
-                        'layout_mode': 'layout',  # This helps preserve layout
-                        'expand_ligatures': True,  # This can help with certain font issues
-                    }
-                )
+                    text = page.extract_text()
+                    lines = [line.strip() for line in text.splitlines() if line.strip()]
                     
                     if not text.strip():
                         continue
 
                     head=''
                     content=[]
-                    for i,line in enumerate(text,1):
+                    for j,line in enumerate(lines):
                         if self.is_headline(line):
-                            head+=line
+                            if j==0:
+                                head+=line
+                            else:
+                                head+=" "+line
                         else:
                             content.append(line)
 
-                    pages_fin[i]= {
+                    cases[i+1]= {
                         "headline":head,
                         "content":content
                     }
 
-                    cases = self.case_processor.process_document(lines)
+                    # cases = self.case_processor.process_document(lines)
                     
-                    for case in cases:
-                        case['page_number'] = page_num + 1
-                        all_cases.append(case)
                 
-            if not all_cases:
+            if not cases:
                 raise ValueError("No valid content found in PDF")
                 
             return {
                 'document_type': 'PDF',
-                'total_pages': len(pdf_reader.pages),
-                'cases': all_cases
+                'total_pages': len(cases),
+                'cases': cases
             }
             
         except Exception as e:

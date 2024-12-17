@@ -3,7 +3,7 @@ import re
 
 class CaseProcessor:
     @staticmethod
-    def split_into_cases(content: List[str]) -> List[Dict[str, Any]]:
+    def split_into_cases(content: Dict[str,Any]) -> List[Dict[str, Any]]:
         cases = []
         current_case = []
         current_headline = ""
@@ -64,7 +64,7 @@ class CaseProcessor:
         return analysis
 
     @staticmethod
-    def process_document(content: List[str]) -> List[Dict[str, Any]]:
+    def process_document(content: Dict[str,Any]) -> List[Dict[str, Any]]:
         cases = CaseProcessor.split_into_cases(content)
         
         analyzed_cases = []

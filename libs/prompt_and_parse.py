@@ -13,7 +13,7 @@ from models.models import (
 
 logger = logging.getLogger(__name__)
 
-def create_extract_prompt(documents: List[str]) -> str:
+def create_extract_prompt(headline: List[str],content: str) -> str:
     prompt = """Extract and list the key entities (persons, organizations, phone numbers, emails) and their direct relationships (e.g., 'Carlos Ramirez' is 'CO-CONSPIRATOR' with 'Elena Torres') from the provided text. Present the data in a JSON format compatible with Cytoscape, including node identifiers, labels, and edge types.
 
 Expected Output:
@@ -179,9 +179,9 @@ Edges: Relationships between entities are defined with source and target nodes, 
 I want you to analyse the below data and convert into the structure mentioned above:"""
 
     # Add documents with clear separation
-    for i, doc in enumerate(documents, 1):
-        print(doc)
-        prompt += f"\n{doc}\n"
+    prompt+=f"\n Headline of the data: {headline}\n"
+    content = "".join(content)
+    prompt+=f'Content of the data: {content}'
     
 #     prompt += """\nCRITICAL REMINDERS:
 # 1. NO isolated nodes allowed
