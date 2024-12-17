@@ -1,7 +1,7 @@
-import { LayoutOptions } from 'cytoscape';
+import { LayoutOptions } from "cytoscape";
 
 export const defaultLayoutOptions: LayoutOptions = {
-  name: 'cola',
+  name: "cola",
   nodeSpacing: 100,
   edgeLength: 200,
   animate: true,

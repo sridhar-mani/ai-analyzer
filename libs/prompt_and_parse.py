@@ -155,19 +155,21 @@ Highlight anomalies (like burner phones) and their potential impact.
 Link anomalies to related entities and categorize severity (HIGH, MEDIUM, LOW).
 4. Graph Data:
 
-Nodes: Each entity is a node with a unique ID, type, and value.
-Edges: Each relationship is an edge, showing source, target, type, and strength.
+Nodes: Each entity is a node with a unique ID, type, and value. We need the nodes to be a array with the each node be a object with that specific entities information.
+Edges: Each relationship is an edge, showing source, target, type, and strength. The edges is also a array with objects where it has the source and target. source is the person who is main and the target is who is related to by the relation.
+
 5. Case Information:
 
 Include case details (case number, title, date, etc.).
 
 
-analyse this data and give responce as the same previous array json structure above containing the entities, relationships, anomalies, graph with nodes and edges, case info as per the structure for each cases in detail: 
+analyse this data and give responce as the same previous array json structure above containing the entities, relationships, anomalies, graph with nodes and edges, case info as per the structure not missing any most importantly the graph nodes and edges that are very important in the end result which is the inference from the entities,relations and anomalies: 
 
 """
 
     # Add documents with clear separation
     for i, doc in enumerate(documents, 1):
+        print(doc)
         prompt += f"\n[Document {i}]\n{doc}\n"
     
     prompt += """\nCRITICAL REMINDERS:
