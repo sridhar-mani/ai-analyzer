@@ -35,10 +35,21 @@ class GraphVizModel(BaseModel):
     class Config:
         arbitrary_types_allowed = True
 
-class DocumentAnalysisResponse(BaseModel):  
-    entities: List[EntityModel]
-    relations: List[RelationModel]
-    anomalies: List[AnomalyModel]
-    graph_data: Optional[GraphVizModel] = None
-    case_info: Optional[CaseInfo] = None
+class CaseAnalysis(BaseModel):
+    # Define the fields for your AI analysis here
+    # For example:
+    entities: List[str] = []
+    relationships: List[dict] = []
+    anomalies: List[str] = []
 
+class CaseInfo(BaseModel):
+    case_id: str
+    headline: str
+    type: str
+    page_number: int
+    content: str
+    ai_analysis: Optional[CaseAnalysis]
+
+class DocumentAnalysisResponse(BaseModel):
+    filename: str
+    cases: List[CaseInfo]

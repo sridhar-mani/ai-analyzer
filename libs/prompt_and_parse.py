@@ -10,6 +10,8 @@ from models.models import (
     DocumentAnalysisRequest,
     DocumentAnalysisResponse
 )
+import hjson
+from ast import literal_eval
 
 logger = logging.getLogger(__name__)
 
@@ -21,7 +23,7 @@ Expected Output:
 {
   "nodes": [
     {
-      "data": {
+
         "id": "Carlos Ramirez",
         "label": "Carlos Ramirez",
         "type": "Person",
@@ -30,10 +32,10 @@ Expected Output:
         "email": "carlos.ramirez@example.com",
         "affiliation": "XYZ Corp",
         "role": "Manager"
-      }
+
     },
     {
-      "data": {
+ 
         "id": "Elena Torres",
         "label": "Elena Torres",
         "type": "Person",
@@ -42,10 +44,10 @@ Expected Output:
         "email": "elena.torres@example.com",
         "affiliation": "ABC Ltd",
         "role": "Analyst"
-      }
+
     },
     {
-      "data": {
+
         "id": "Kelly Johnson",
         "label": "Kelly Johnson",
         "type": "Person",
@@ -54,10 +56,10 @@ Expected Output:
         "email": "kelly.johnson@example.com",
         "affiliation": "DEF Inc",
         "role": "Consultant"
-      }
+  
     },
     {
-      "data": {
+     
         "id": "Paul Simmons",
         "label": "Paul Simmons",
         "type": "Person",
@@ -66,10 +68,10 @@ Expected Output:
         "email": "paul.simmons@example.com",
         "affiliation": "GHI LLC",
         "role": "Director"
-      }
+   
     },
     {
-      "data": {
+  
         "id": "Agent Rebecca Cruz",
         "label": "Agent Rebecca Cruz",
         "type": "Person",
@@ -78,10 +80,10 @@ Expected Output:
         "email": "rebecca.cruz@dea.gov",
         "affiliation": "DEA",
         "role": "Agent"
-      }
+  
     },
     {
-      "data": {
+    
         "id": "DEA",
         "label": "DEA",
         "type": "Organization",
@@ -90,81 +92,76 @@ Expected Output:
         "email": "dea.tips@agency.gov",
         "affiliation": null,
         "role": null
-      }
+
     }
   ],
   "edges": [
     {
-      "data": {
+ 
         "source": "Carlos Ramirez",
         "target": "Elena Torres",
         "type": "CO-CONSPIRATOR",
         "relationship_strength": "High",
         "discovery_date": "2024-12-01"
-      }
+  
     },
     {
-      "data": {
+     
         "source": "DEA",
         "target": "Carlos Ramirez",
         "type": "ARRESTED",
         "relationship_strength": "N/A",
         "discovery_date": "2024-12-10"
-      }
+  
     },
     {
-      "data": {
+     
         "source": "DEA",
         "target": "Elena Torres",
         "type": "ARRESTED",
         "relationship_strength": "N/A",
         "discovery_date": "2024-12-10"
-      }
+
     },
     {
-      "data": {
+
         "source": "DEA",
         "target": "DEA",
         "type": "MONITORED_USING",
         "relationship_strength": "N/A",
         "discovery_date": "2024-12-05"
-      }
+
     },
     {
-      "data": {
+
         "source": "Carlos Ramirez",
         "target": "+1-555-888-9999",
         "type": "USED_FOR_COMMUNICATION",
         "relationship_strength": "High",
         "discovery_date": "2024-12-02"
-      }
+
     },
     {
-      "data": {
         "source": "Elena Torres",
         "target": "+1-555-666-7777",
         "type": "USED_FOR_COMMUNICATION",
         "relationship_strength": "Medium",
         "discovery_date": "2024-12-03"
-      }
+
     },
     {
-      "data": {
         "source": "DEA",
         "target": "dea.tips@agency.gov",
         "type": "CONTACT",
         "relationship_strength": "High",
         "discovery_date": "2024-12-01"
-      }
     },
     {
-      "data": {
         "source": "DEA",
         "target": "+1-800-DRUGSTOP",
         "type": "CONTACT",
         "relationship_strength": "High",
         "discovery_date": "2024-12-01"
-      }
     }
   ]
 }
@@ -174,7 +171,9 @@ Explanation:
 
 Nodes: Each key entity is represented with a unique identifier (id) and a label (label).
 
-Edges: Relationships between entities are defined with source and target nodes, along with a type indicating the nature of the relationship. 
+Edges: Relationships between entities are defined with source and target nodes, along with a type indicating the nature of the relationship.
+
+Make sure to give only the json string output no text other than that and the main json should have 2 properties the nodes and edges. Nodes should have a array that has objects each a node. Edges should have a array that has objects each a edge.
 
 I want you to analyse the below data and convert into the structure mentioned above:"""
 
@@ -196,6 +195,57 @@ I want you to analyse the below data and convert into the structure mentioned ab
     return prompt
 
 
+def restructure_prompt(original_prompt):
+    improvement_prompt = f"""
+    As an AI language model expert, your task is to analyze and improve the following prompt. 
+    The prompt is designed to extract entity recognition, relationship extraction, and anomaly detection from legal case content.
+    Please suggest improvements to make the prompt more effective, clear, and likely to yield accurate results.
+
+    Original Prompt:
+    {original_prompt}
+
+    Please provide an improved version of this prompt, addressing the following aspects:
+    1. Clarity: Ensure the instructions are clear and unambiguous.
+    2. Specificity: Add more specific guidelines for entity recognition, relationship extraction, and anomaly detection.
+    3. Structure: Improve the structure to make it easier for the model to follow and respond accurately.
+    4. Completeness: Add any missing elements that could help in getting a more comprehensive analysis.
+
+    Provide only the improved prompt without any additional explanations.
+    """
+
+    try:
+        response = ollama.chat(
+            model="mistral:instruct",
+            messages=[
+                {
+                    'role': 'system',
+                    'content': 'You are an expert AI prompt engineer, skilled at improving prompts for optimal results.'
+                },
+                {
+                    'role': 'user',
+                    'content': improvement_prompt
+                }
+            ],
+            options={
+                "num_predict": 4096,
+                "stop": ["\n\n\n"],
+                "temperature": 0.7
+            }
+        )
+
+        if hasattr(response, 'message'):
+            improved_prompt = response.message.content.strip()
+            logger.info("Successfully restructured the prompt")
+            return improved_prompt
+        else:
+            logger.warning("Failed to get a response for prompt restructuring")
+            return original_prompt
+
+    except Exception as e:
+        logger.error(f"Error in restructuring prompt: {str(e)}")
+        return original_prompt
+
+
 def parse_response(response: Dict[str, Any]) -> DocumentAnalysisResponse:
     try:
         logger.info("Starting response parsing")
@@ -207,23 +257,14 @@ def parse_response(response: Dict[str, Any]) -> DocumentAnalysisResponse:
         logger.info(f"Content length: {len(content)}")
         logger.debug(f"Raw content: {content[:500]}")
 
-        json_start = content.find('{')
-        json_end = content.rfind('}') + 1
-        
-        if json_start == -1 or json_end == 0:
-            raise ValueError("No JSON object found in response")
-            
-        json_str = content[json_start:json_end]
-        
-        json_str = json_str.replace('```json', '').replace('```', '')
-        json_str = re.sub(r',(\s*[}\]])', r'\1', json_str)
-        
+        json_cleaned = content.replace('\n','')
+        json_str = json_cleaned.replace('\n', '').replace('\r', '')
+        if '```' in json_str: 
+          json_str=json_str.lsplit('```',1)[1].replace('```','')
         try:
+            data = hjson.loads(json_str)
+        except:
             data = json.loads(json_str)
-        except json.JSONDecodeError as e:
-            logger.error(f"JSON parsing error: {str(e)}")
-            logger.debug(f"Attempted to parse: {json_str}")
-            raise ValueError(f"Invalid JSON structure: {str(e)}")
 
         if "Document Summaries" in data and not any(k in data for k in ["entities", "relations", "anomalies"]):
   
@@ -244,83 +285,17 @@ def parse_response(response: Dict[str, Any]) -> DocumentAnalysisResponse:
             
             data = converted_data
 
-        data.setdefault("entities", [])
-        data.setdefault("relations", [])
-        data.setdefault("anomalies", [])
-
-        entities = []
-        for e in data.get("entities", []):
-            try:
-                entity = EntityModel(
-                    value=str(e.get("value", "")).strip(),
-                    type=str(e.get("type", "UNKNOWN")).strip(),
-                    context=str(e.get("context", "")).strip(),
-                    confidence=float(e.get("confidence", 0.5))
-                )
-                if entity.value:
-                    entities.append(entity)
-            except Exception as err:
-                logger.warning(f"Error parsing entity: {e}. Error: {err}")
-
-        relations = []
-        for r in data.get("relations", []):
-            try:
-                relation = RelationModel(
-                    source=str(r.get("source", "")).strip(),
-                    target=str(r.get("target", "")).strip(),
-                    type=str(r.get("type", "")).strip(),
-                    confidence=float(r.get("confidence", 0.5))
-                )
-                if relation.source and relation.target:
-                    relations.append(relation)
-            except Exception as err:
-                logger.warning(f"Error parsing relation: {r}. Error: {err}")
-
-        anomalies = []
-        for a in data.get("anomalies", []):
-            try:
-                anomaly = AnomalyModel(
-                    description=str(a.get("description", "")).strip(),
-                    severity=str(a.get("severity", "MEDIUM")).strip(),
-                    related_entities=[str(e).strip() for e in a.get("related_entities", []) if str(e).strip()],
-                    potential_impact=str(a.get("potential_impact", "")).strip() or None
-                )
-                if anomaly.description:
-                    anomalies.append(anomaly)
-            except Exception as err:
-                logger.warning(f"Error parsing anomaly: {a}. Error: {err}")
-
         nodes = []
         edges = []
-        entity_set = set()
-        
-        for entity in entities:
-            if entity.value not in entity_set:
-                nodes.append({
-                    "id": entity.value,
-                    "label": entity.value,
-                    "type": entity.type,
-                    "confidence": entity.confidence
-                })
-                entity_set.add(entity.value)
-
-        for relation in relations:
-            if relation.source in entity_set and relation.target in entity_set:
-                edges.append({
-                    "source": relation.source,
-                    "target": relation.target,
-                    "label": relation.type,
-                    "confidence": relation.confidence
-                })
 
         graph_data = GraphVizModel(nodes=nodes, edges=edges)
         
-        logger.info(f"Successfully processed {len(entities)} entities, {len(relations)} relations, {len(anomalies)} anomalies")
+        # logger.info(f"Successfully processed {len(entities)} entities, {len(relations)} relations, {len(anomalies)} anomalies")
 
         return DocumentAnalysisResponse(
-            entities=entities,
-            relations=relations,
-            anomalies=anomalies,
+            entities=[],
+            relations=[],
+            anomalies=[],
             graph_data=graph_data
         )
 
