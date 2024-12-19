@@ -246,7 +246,7 @@ def restructure_prompt(original_prompt):
         return original_prompt
 
 
-def parse_response(response: Dict[str, Any]) -> DocumentAnalysisResponse:
+def parse_response(response: Dict[str, Any]) -> dict:
     try:
         logger.info("Starting response parsing")
         
@@ -257,47 +257,73 @@ def parse_response(response: Dict[str, Any]) -> DocumentAnalysisResponse:
         logger.info(f"Content length: {len(content)}")
         logger.debug(f"Raw content: {content[:500]}")
 
-        json_cleaned = content.replace('\n','')
-        json_str = json_cleaned.replace('\n', '').replace('\r', '')
-        if '```' in json_str: 
-          json_str=json_str.lsplit('```',1)[1].replace('```','')
-        try:
-            data = hjson.loads(json_str)
-        except:
-            data = json.loads(json_str)
+        json_cleaned = content.replace('\n', '').replace('\r', '')
 
-        if "Document Summaries" in data and not any(k in data for k in ["entities", "relations", "anomalies"]):
-  
-            converted_data = {
-                "entities": [],
-                "relations": [],
-                "anomalies": []
-            }
-            
-            for summary in data["Document Summaries"]:
-                if "Headline" in summary:
-                    converted_data["entities"].append({
-                        "value": summary["Headline"],
-                        "type": "HEADLINE",
-                        "context": summary.get("Summary", ""),
-                        "confidence": 1.0
-                    })
-            
-            data = converted_data
+        # Handle the case where the JSON might be wrapped in ``` or other markers
+        if '```' in json_cleaned:
+            json_cleaned = json_cleaned.split('```', 1)[1].replace('```', '')
 
-        nodes = []
-        edges = []
-
-        graph_data = GraphVizModel(nodes=nodes, edges=edges)
+        # Check for potential JSON formatting issues and clean them
+        if ':' in json_cleaned.split('nodes')[0]:
+            json_cleaned = json_cleaned.split(':', 1)[1]
         
-        # logger.info(f"Successfully processed {len(entities)} entities, {len(relations)} relations, {len(anomalies)} anomalies")
+        json_cleaned = json_cleaned.rsplit('}')[0] + '}'
 
-        return DocumentAnalysisResponse(
-            entities=[],
-            relations=[],
-            anomalies=[],
-            graph_data=graph_data
-        )
+        # Try loading the cleaned JSON with hjson, falling back to json
+        try:
+            data = hjson.loads(json_cleaned)
+        except hjson.HjsonDecodeError:
+            try:
+                data = json.loads(json_cleaned)
+            except json.JSONDecodeError:
+                logger.error("Failed to parse JSON or HJSON")
+                raise ValueError("Failed to parse JSON or HJSON")
+
+        # Extract nodes and edges, ensure correct structure
+        nodes = data.get('nodes', [])
+        edges = data.get('edges', [])
+
+        # Convert nodes to EntityModel
+        entities = [
+            {
+                'value': node.get('id', ''),
+                'type': node.get('type', 'Unknown'),
+                'context': f"Location: {node.get('location', 'N/A')}, Role: {node.get('role', 'N/A')}",
+                'confidence': 1.0
+            } for node in nodes
+        ]
+
+        # Convert edges to RelationModel
+        relationships = [
+            {
+                'source': edge.get('source', ''),
+                'target': edge.get('target', ''),
+                'type': edge.get('type', 'Unknown'),
+                'confidence': 1.0
+            } for edge in edges
+        ]
+
+        # Anomaly detection logic based on edge types
+        anomalies = [
+            {
+                'description': f"Potential suspicious relationship between {edge.get('source', '')} and {edge.get('target', '')}",
+                'severity': "LOW",
+                'related_entities': [edge.get('source', ''), edge.get('target', '')]
+            } for edge in edges if edge.get('type') in ['CO-CONSPIRATOR', 'ARRESTED']
+        ]
+
+        # Assuming GraphVizModel can be created with nodes and edges (you can adjust this as needed)
+        graph_data = {
+            'nodes': nodes,
+            'edges': edges
+        }
+
+        return {
+            'entities': entities,
+            'relationships': relationships,
+            'anomalies': anomalies,
+            'graph_data': graph_data
+        }
 
     except Exception as e:
         logger.error(f"Error in parse_response: {str(e)}", exc_info=True)

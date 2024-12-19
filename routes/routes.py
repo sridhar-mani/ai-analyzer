@@ -62,7 +62,7 @@ async def analyze_doc(files: List[UploadFile] = File(...)) -> List[DocumentAnaly
                                     options={
                                         "num_predict": 4096,
                                         "stop": ["\n\n\n"],
-                                        "temperature": 0.7
+                                        "temperature": 0.8
                                     }
                                 )
                                 
@@ -70,11 +70,8 @@ async def analyze_doc(files: List[UploadFile] = File(...)) -> List[DocumentAnaly
                                     content = response.message.content
                                     if content:
                                         parsed_response = parse_response({'response': content})
-                                        if parsed_response:
-                                            ai_analysis = CaseAnalysis(**parsed_response)
+                                        if type(parse_response)=='dict':
                                             break
-                                        else:
-                                            logger.warning(f"Empty parsed response for case {case_id} using model {model}")
                                     else:
                                         logger.warning(f"Empty content for case {case_id} using model {model}")
                                 else:
@@ -88,7 +85,7 @@ async def analyze_doc(files: List[UploadFile] = File(...)) -> List[DocumentAnaly
                             type=case_data['analysis']['type'],
                             page_number=case_data['page_number'],
                             content=case_content,
-                            ai_analysis=ai_analysis if ai_analysis else CaseAnalysis()
+                            ai_analysis=parsed_response
                         )
                         
                         file_analysis["cases"].append(case_info)
