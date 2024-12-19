@@ -1,4 +1,4 @@
-# routes.py
+
 import ollama
 import logging
 import traceback
@@ -17,7 +17,6 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
-# Define the sequence of steps to try
 MODELS = ["openhermes:latest", "mistral:instruct"]
 
 @router.post("/analyze")
@@ -44,10 +43,10 @@ async def analyze_doc(files: List[UploadFile] = File(...)) -> List[DocumentAnaly
                         logger.debug(f"Processing case: {case_id}")
                         case_content = case_data['content']
                         case_headline = case_data['headline']
+                        case_data['page_number'] = case_id
                         
                         prompt = create_extract_prompt(case_headline, case_content)
                         
-                        ai_analysis = None
                         for model in MODELS:
                             try:
                                 response = ollama.chat(
@@ -62,7 +61,7 @@ async def analyze_doc(files: List[UploadFile] = File(...)) -> List[DocumentAnaly
                                     options={
                                         "num_predict": 4096,
                                         "stop": ["\n\n\n"],
-                                        "temperature": 0.8
+                                        "temperature": 0.7
                                     }
                                 )
                                 
@@ -70,7 +69,7 @@ async def analyze_doc(files: List[UploadFile] = File(...)) -> List[DocumentAnaly
                                     content = response.message.content
                                     if content:
                                         parsed_response = parse_response({'response': content})
-                                        if type(parse_response)=='dict':
+                                        if parsed_response:
                                             break
                                     else:
                                         logger.warning(f"Empty content for case {case_id} using model {model}")
@@ -82,7 +81,6 @@ async def analyze_doc(files: List[UploadFile] = File(...)) -> List[DocumentAnaly
                         case_info = CaseInfo(
                             case_id=case_id,
                             headline=case_headline,
-                            type=case_data['analysis']['type'],
                             page_number=case_data['page_number'],
                             content=case_content,
                             ai_analysis=parsed_response
@@ -94,9 +92,7 @@ async def analyze_doc(files: List[UploadFile] = File(...)) -> List[DocumentAnaly
                         logger.error(f"Error processing case {case_id}: {str(e)}")
                         logger.error(traceback.format_exc())
                         continue
-                
                 all_analyses.append(DocumentAnalysisResponse(**file_analysis))
-                    
             except Exception as e:
                 logger.error(f"Error processing file {f.filename}: {str(e)}")
                 logger.error(traceback.format_exc())
@@ -107,15 +103,6 @@ async def analyze_doc(files: List[UploadFile] = File(...)) -> List[DocumentAnaly
             
         return all_analyses
     
-    except Exception as e:
-        logger.error(f"Unexpected error: {str(e)}")
-        logger.error(traceback.format_exc())
-        raise HTTPException(
-            status_code=500,
-            detail=f"Error processing request: {str(e)}"
-        )
-
-        
     except Exception as e:
         logger.error(f"Unexpected error: {str(e)}")
         logger.error(traceback.format_exc())

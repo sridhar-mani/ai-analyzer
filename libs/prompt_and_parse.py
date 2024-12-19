@@ -11,6 +11,7 @@ from models.models import (
     DocumentAnalysisResponse
 )
 import hjson
+import ollama
 from ast import literal_eval
 
 logger = logging.getLogger(__name__)
@@ -318,12 +319,7 @@ def parse_response(response: Dict[str, Any]) -> dict:
             'edges': edges
         }
 
-        return {
-            'entities': entities,
-            'relationships': relationships,
-            'anomalies': anomalies,
-            'graph_data': graph_data
-        }
+        return  graph_data
 
     except Exception as e:
         logger.error(f"Error in parse_response: {str(e)}", exc_info=True)

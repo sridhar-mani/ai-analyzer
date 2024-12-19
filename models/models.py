@@ -23,31 +23,18 @@ class AnomalyModel(BaseModel):
     related_entities: List[str] = Field(default_factory=list)
     potential_impact: Optional[str] = None
 
-class CaseInfo(BaseModel):
-    headline: str = ""
-    type: str
-    page_number: int
-
 class GraphVizModel(BaseModel):
     nodes: List[Dict[str, Any]]
     edges: List[Dict[str, Any]]
     
     class Config:
         arbitrary_types_allowed = True
-
-class CaseAnalysis(BaseModel):
-    entities: List[EntityModel] = Field(default_factory=list)
-    relationships: List[RelationModel] = Field(default_factory=list)
-    anomalies: List[AnomalyModel] = Field(default_factory=list)
-    graph_data: Optional[GraphVizModel] = None
-
 class CaseInfo(BaseModel):
-    case_id: str
+    case_id: Any
     headline: str
-    type: str
     page_number: int
     content: str
-    ai_analysis: Optional[CaseAnalysis] = None
+    ai_analysis: Optional[GraphVizModel] = None
 
 class DocumentAnalysisResponse(BaseModel):
     filename: str
