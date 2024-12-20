@@ -2,13 +2,15 @@ import React, { useState, useCallback } from "react";
 import Sidebar from "./components/Sidebar";
 import MainContent from "./components/MainContent";
 import { GraphData } from "./types/graph";
-import { sampleData } from "./data/sampleData";
 
 function App() {
   const [analysisStatus, setAnalysisStatus] = useState<
     "idle" | "analyzing" | "complete" | "error"
   >("idle");
-  const [graphData, setGraphData] = useState<GraphData>(sampleData);
+  const [graphData, setGraphData] = useState<GraphData>({
+    entities: [],
+    relationships: [],
+  });
 
   const handleFilesSelected = useCallback(async (files: FileList) => {
     setAnalysisStatus("analyzing");
@@ -17,17 +19,23 @@ function App() {
       formData.append("files", f);
       console.log("sending file", f.name);
     });
-    const res = await fetch("http://localhost:8000/analyze", {
-      method: "POST",
-      headers: {
-        accept: "application/json",
-      },
-      body: formData,
-    });
+    try {
+      const res = await fetch("http://localhost:8000/analyze", {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+        },
+        body: formData,
+      });
 
-    const data = await res.json();
+      console.log("initial response", res);
 
-    console.log(data);
+      const data = await res.json();
+
+      console.log(data);
+    } catch (er) {
+      console.log("Error in fetching the response", er);
+    }
 
     // Simulate document analysis
     setTimeout(() => {

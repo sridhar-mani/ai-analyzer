@@ -23,7 +23,6 @@ MODELS = ["openhermes:latest", "mistral:instruct"]
 @router.post("/analyze")
 async def analyze_doc(files: List[UploadFile] = File(...)) -> dict:
     try:
-        all_analyses = []
         
         for f in files:
             try:
@@ -97,8 +96,13 @@ async def analyze_doc(files: List[UploadFile] = File(...)) -> dict:
                 logger.error(f"Error processing file {f.filename}: {str(e)}")
                 logger.error(traceback.format_exc())
                 continue
+        print('--------------------------------------------file analyssis final output ------------------------------------------------')
         
-        return JSONResponse({"status":"success","data":all_analyses})
+        print(file_analysis)
+
+        print('--------------------------------------------file analyssis final output ------------------------------------------------')
+        
+        return JSONResponse({"status":"success","data":file_analysis})
     
     except Exception as e:
         logger.error(f"Unexpected error: {str(e)}")
