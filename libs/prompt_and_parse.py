@@ -13,6 +13,8 @@ from models.models import (
 import hjson
 import ollama
 from ast import literal_eval
+import jsonfinder
+import demjson3
 
 logger = logging.getLogger(__name__)
 
@@ -259,23 +261,17 @@ def parse_response(response: Dict[str, Any]) -> dict:
         logger.debug(f"Raw content: {content[:500]}")
 
         json_cleaned = content.replace('\n', '').replace('\r', '')
-
-        # Handle the case where the JSON might be wrapped in ``` or other markers
-        if '```' in json_cleaned:
-            json_cleaned = json_cleaned.split('```', 1)[1].replace('```', '')
-
-        # Check for potential JSON formatting issues and clean them
-        if ':' in json_cleaned.split('nodes')[0]:
-            json_cleaned = json_cleaned.split(':', 1)[1]
         
-        json_cleaned = json_cleaned.rsplit('}')[0] + '}'
+        json_cleaned=json_cleaned.replace('```','')
+        
+        json_cleaned = '{"nodes"'+json_cleaned.split('"nodes"')[1]
 
         # Try loading the cleaned JSON with hjson, falling back to json
         try:
-            data = hjson.loads(json_cleaned)
+            data = demjson3.decode(json_cleaned, strict=False)
         except hjson.HjsonDecodeError:
             try:
-                data = json.loads(json_cleaned)
+                data = jsonfinder.JSONFinder(json_cleaned)
             except json.JSONDecodeError:
                 logger.error("Failed to parse JSON or HJSON")
                 raise ValueError("Failed to parse JSON or HJSON")

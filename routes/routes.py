@@ -98,10 +98,7 @@ async def analyze_doc(files: List[UploadFile] = File(...)) -> List[DocumentAnaly
                 logger.error(traceback.format_exc())
                 continue
         
-        if not all_analyses:
-            raise ValueError("No valid analyses produced")
-            
-        return all_analyses
+        return file_analysis
     
     except Exception as e:
         logger.error(f"Unexpected error: {str(e)}")

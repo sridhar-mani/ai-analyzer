@@ -32,9 +32,9 @@ class GraphVizModel(BaseModel):
 class CaseInfo(BaseModel):
     case_id: Any
     headline: str
-    page_number: int
-    content: str
-    ai_analysis: Optional[GraphVizModel] = None
+    page_number: Any
+    content: List[str]
+    ai_analysis: Optional[Any] = None
 
 class DocumentAnalysisResponse(BaseModel):
     filename: str
