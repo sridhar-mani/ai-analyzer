@@ -4,9 +4,10 @@ import { GraphData } from "../../types/graph";
 
 interface MainContentProps {
   data: GraphData;
+  curCase: number;
 }
 
-const MainContent: React.FC<MainContentProps> = ({ data }) => {
+const MainContent: React.FC<MainContentProps> = ({ data, curCase }) => {
   return (
     <div className="flex-1 h-screen flex flex-col">
       <div className="p-4 border-b border-gray-200">

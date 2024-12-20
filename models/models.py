@@ -36,6 +36,5 @@ class CaseInfo(BaseModel):
     content: List[str]
     ai_analysis: Optional[Any] = None
 
-class DocumentAnalysisResponse(BaseModel):
-    filename: str
-    cases: List[CaseInfo]
+    class config:
+        orm_mode = True

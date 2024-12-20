@@ -2,14 +2,6 @@ from typing import List, Dict, Any
 import json
 import re
 import logging
-from models.models import (
-    EntityModel,
-    RelationModel,
-    AnomalyModel,
-    GraphVizModel,
-    DocumentAnalysisRequest,
-    DocumentAnalysisResponse
-)
 import hjson
 import ollama
 from ast import literal_eval
