@@ -2,21 +2,21 @@ import React, { useState, useCallback } from "react";
 import Sidebar from "./components/Sidebar";
 import MainContent from "./components/MainContent";
 import { GraphData, FileData, TotalDatas } from "./types/graph";
+import useAiStore from "./store/useAiStore";
+import VTKLoader from "./vTkviewer.jsx";
 
 function App() {
-  const [analysisStatus, setAnalysisStatus] = useState<
- 
-  >("idle");
-  const [graphData, setGraphData] = useState<GraphData>({
-    entities: [],
-    relationships: [],
-  });
-  const [fileData, setFileData] = useState<FileData>({
-    filename: "",
-    cases: [],
-  });
-  const [totalData, setTotalData] = useState<TotalDatas>({ datas: [] });
-  const [curCase, setCurCase] = useState<number>(0);
+  // const [analysisStatus, setAnalysisStatus] = useState<>("idle");
+  const {
+    fileData,
+    setFileData,
+    totalData,
+    addFileData,
+    curCase,
+    setCurCase,
+    graphData,
+    setGraphData,
+  } = useAiStore();
 
   const handleFilesSelected = useCallback(async (files: FileList) => {
     setAnalysisStatus("analyzing");
@@ -63,10 +63,9 @@ function App() {
         entities={graphData.entities}
         onFilesSelected={handleFilesSelected}
         onEntityClick={handleEntityClick}
-        curCase={curCase}
-        setCurCase={setCurCase}
       />
-      <MainContent data={graphData} curCase={curCase} />
+      <MainContent data={graphData} />
+      <VTKLoader></VTKLoader>
     </div>
   );
 }

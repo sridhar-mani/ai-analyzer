@@ -17,12 +17,32 @@ export interface TotalDatas {
 interface Store {
   fileData: FileData;
   totalData: TotalDatas;
-  setFileData: (FileData: FileData) => void;
-  setTotalData: (totalData: TotalDatas) => void;
+  setFileData: (fileData: FileData) => void;
   analysisStatus: "idle" | "analyzing" | "complete" | "error";
   setAnalysisStatus: (
     analysis: "idle" | "analyzing" | "complete" | "error"
   ) => void;
+  curCase: number;
+  setCurCase: (cur: number) => void;
+  graphData: GraphData;
+  setGraphData: (graphData: GraphData) => void;
 }
 
-const useAiStore = create<Store>((set) => ({}));
+const useAiStore = create<Store>((set) => ({
+  fileData: { filename: "", cases: [] },
+  analysisStatus: "idle",
+  totalData: { datas: [] },
+  setFileData: (fileData) => set({ fileData }),
+  setAnalysisStatus: (status) => set({ analysisStatus: status }),
+  addFileData: (newFileData) =>
+    set((state) => ({
+      totalData: {
+        datas: [...state.totalData.datas, newFileData],
+      },
+    })),
+  curCase: 0,
+  setCurCase: (cur) => set({ curCase: cur }),
+  graphData: {}
+}));
+
+export default useAiStore;

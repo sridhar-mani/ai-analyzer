@@ -8,7 +8,6 @@ interface SidebarProps {
   entities: Entity[];
   onFilesSelected: (files: FileList) => void;
   onEntityClick: (entity: Entity) => void;
-  curCase: number;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
