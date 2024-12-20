@@ -4,6 +4,7 @@ import logging
 import traceback
 from typing import List
 from fastapi import File, UploadFile, HTTPException, APIRouter
+from fastapi.responses import JSONResponse
 from models.models import DocumentAnalysisRequest, DocumentAnalysisResponse, CaseInfo
 from libs.prompt_and_parse import parse_response, create_extract_prompt
 from libs.file_reader import UniversalDocumentReader
@@ -20,7 +21,7 @@ router = APIRouter()
 MODELS = ["openhermes:latest", "mistral:instruct"]
 
 @router.post("/analyze")
-async def analyze_doc(files: List[UploadFile] = File(...)) -> List[DocumentAnalysisResponse]:
+async def analyze_doc(files: List[UploadFile] = File(...)) -> dict:
     try:
         all_analyses = []
         
@@ -92,18 +93,17 @@ async def analyze_doc(files: List[UploadFile] = File(...)) -> List[DocumentAnaly
                         logger.error(f"Error processing case {case_id}: {str(e)}")
                         logger.error(traceback.format_exc())
                         continue
-                all_analyses.append(DocumentAnalysisResponse(**file_analysis))
             except Exception as e:
                 logger.error(f"Error processing file {f.filename}: {str(e)}")
                 logger.error(traceback.format_exc())
                 continue
         
-        return file_analysis
+        return JSONResponse({"status":"success","data":all_analyses})
     
     except Exception as e:
         logger.error(f"Unexpected error: {str(e)}")
         logger.error(traceback.format_exc())
-        raise HTTPException(
+        return JSONResponse(
             status_code=500,
-            detail=f"Error processing request: {str(e)}"
+            content={"status": "error", "message": f"Error processing request: {str(e)}"}
         )

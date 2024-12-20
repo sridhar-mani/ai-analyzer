@@ -280,35 +280,6 @@ def parse_response(response: Dict[str, Any]) -> dict:
         nodes = data.get('nodes', [])
         edges = data.get('edges', [])
 
-        # Convert nodes to EntityModel
-        entities = [
-            {
-                'value': node.get('id', ''),
-                'type': node.get('type', 'Unknown'),
-                'context': f"Location: {node.get('location', 'N/A')}, Role: {node.get('role', 'N/A')}",
-                'confidence': 1.0
-            } for node in nodes
-        ]
-
-        # Convert edges to RelationModel
-        relationships = [
-            {
-                'source': edge.get('source', ''),
-                'target': edge.get('target', ''),
-                'type': edge.get('type', 'Unknown'),
-                'confidence': 1.0
-            } for edge in edges
-        ]
-
-        # Anomaly detection logic based on edge types
-        anomalies = [
-            {
-                'description': f"Potential suspicious relationship between {edge.get('source', '')} and {edge.get('target', '')}",
-                'severity': "LOW",
-                'related_entities': [edge.get('source', ''), edge.get('target', '')]
-            } for edge in edges if edge.get('type') in ['CO-CONSPIRATOR', 'ARRESTED']
-        ]
-
         # Assuming GraphVizModel can be created with nodes and edges (you can adjust this as needed)
         graph_data = {
             'nodes': nodes,

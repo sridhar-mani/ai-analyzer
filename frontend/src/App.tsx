@@ -15,6 +15,7 @@ function App() {
     const formData = new FormData();
     Array.from(files).forEach((f) => {
       formData.append("files", f);
+      console.log("sending file", f.name);
     });
     const res = await fetch("http://localhost:8000/analyze", {
       method: "POST",
