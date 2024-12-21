@@ -34,7 +34,7 @@ const useAiStore = create<Store>((set) => ({
   totalData: { datas: [] },
   setFileData: (fileData) => set({ fileData }),
   setAnalysisStatus: (status) => set({ analysisStatus: status }),
-  addFileData: (newFileData) =>
+  addFileData: (newFileData:FileData) =>
     set((state) => ({
       totalData: {
         datas: [...state.totalData.datas, newFileData],
@@ -42,7 +42,9 @@ const useAiStore = create<Store>((set) => ({
     })),
   curCase: 0,
   setCurCase: (cur) => set({ curCase: cur }),
-  graphData: {}
+  graphData: {entities:[],relationships:[]},
+  setGraphData: (graphData: GraphData)=>set({graphData})
+
 }));
 
 export default useAiStore;

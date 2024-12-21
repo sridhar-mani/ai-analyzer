@@ -1,9 +1,8 @@
 import React, { useState, useCallback } from "react";
 import Sidebar from "./components/Sidebar";
 import MainContent from "./components/MainContent";
-import { GraphData, FileData, TotalDatas } from "./types/graph";
 import useAiStore from "./store/useAiStore";
-import VTKLoader from "./vTkviewer.jsx";
+// import VTKLoader from "./vTkviewer.jsx";
 
 function App() {
   // const [analysisStatus, setAnalysisStatus] = useState<>("idle");
@@ -16,6 +15,8 @@ function App() {
     setCurCase,
     graphData,
     setGraphData,
+    analysisStatus,
+    setAnalysisStatus
   } = useAiStore();
 
   const handleFilesSelected = useCallback(async (files: FileList) => {
@@ -26,7 +27,7 @@ function App() {
       console.log("sending file", f.name);
     });
     try {
-      const res = await fetch("http://localhost:8000/analyze", {
+      const res = await fetch("http://localhost:5203/analyze", {
         method: "POST",
         headers: {
           accept: "application/json",
@@ -51,9 +52,8 @@ function App() {
     }, 2000);
   }, []);
 
-  const handleEntityClick = useCallback((entity) => {
+  const handleEntityClick = useCallback((entity:{}) => {
     console.log("Entity clicked:", entity);
-    // Implement entity focus/highlight logic here
   }, []);
 
   return (
@@ -65,7 +65,7 @@ function App() {
         onEntityClick={handleEntityClick}
       />
       <MainContent data={graphData} />
-      <VTKLoader></VTKLoader>
+      {/* <VTKLoader></VTKLoader> */}
     </div>
   );
 }
