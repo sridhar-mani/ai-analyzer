@@ -12,6 +12,8 @@ export const createElements = (data: GraphData): (NodeDefinition | EdgeDefinitio
     },
   }));
 
+  console.log(data);
+
   const edges = data.relationships.map((rel) => ({
     group: 'edges' as const,
     data: {
