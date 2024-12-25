@@ -26,6 +26,7 @@ interface Store {
   setCurCase: (cur: number) => void;
   graphData: GraphData;
   setGraphData: (graphData: GraphData) => void;
+  addFileData: (file: FileData)=> void
 }
 
 const useAiStore = create<Store>((set) => ({

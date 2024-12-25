@@ -2,7 +2,6 @@ import React, { useRef } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
 import cytoscape from 'cytoscape';
 import cola from 'cytoscape-cola';
-import { GraphData } from '../types/graph';
 import { createElements, graphStyles } from '../utils/cytoscape';
 import { useGraphControls } from '../hooks/useGraphControls';
 import { defaultLayoutOptions } from '../utils/layout';
@@ -11,11 +10,8 @@ import Controls from './Controls';
 // Register the cola layout
 cytoscape.use(cola);
 
-interface GraphProps {
-  data: GraphData;
-}
 
-const Graph: React.FC<GraphProps> = ({ data }) => {
+const Graph = ({ data }) => {
   const cyRef = useRef<cytoscape.Core | null>(null);
   const {
     handleZoomIn,

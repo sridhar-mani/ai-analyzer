@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import Sidebar from "./components/Sidebar";
 import MainContent from "./components/MainContent";
 import useAiStore from "./store/useAiStore";
@@ -27,7 +27,7 @@ function App() {
       console.log("sending file", f.name);
     });
     try {
-      const res = await fetch("http://localhost:5203/analyze", {
+      const res = await fetch("http://localhost:2345/analyze", {
         method: "POST",
         headers: {
           accept: "application/json",
@@ -35,11 +35,21 @@ function App() {
         body: formData,
       });
 
+      
+
       console.log("initial response", res);
 
       const data = await res.json();
 
-      console.log(data);
+        // Validate data structure
+        if (!data?.data?.[curCase]?.cases?.[curCase]?.ai_analysis) {
+          throw new Error('Invalid data structure received from server');
+        }
+
+      console.log(data.data[curCase].cases[curCase].ai_analysis);
+      addFileData(data)
+      setFileData(data.data[curCase])
+      setCurCase(0)
     } catch (er) {
       console.log("Error in fetching the response", er);
     }
@@ -51,6 +61,17 @@ function App() {
       // and update the graph data with the results
     }, 2000);
   }, []);
+
+  useEffect(()=>{
+
+    if( fileData.cases[curCase] && fileData.cases[curCase].ai_analysis){
+    setGraphData({entities:[...(fileData.cases[curCase].ai_analysis.nodes)], relationships:[...(fileData.cases[curCase].ai_analysis.edges)]})
+    }
+
+
+  },[curCase,fileData,totalData])
+
+  
 
   const handleEntityClick = useCallback((entity:{}) => {
     console.log("Entity clicked:", entity);
@@ -65,7 +86,6 @@ function App() {
         onEntityClick={handleEntityClick}
       />
       <MainContent data={graphData} />
-      {/* <VTKLoader></VTKLoader> */}
     </div>
   );
 }

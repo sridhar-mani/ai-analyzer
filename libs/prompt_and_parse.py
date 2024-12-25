@@ -168,7 +168,7 @@ Nodes: Each key entity is represented with a unique identifier (id) and a label 
 
 Edges: Relationships between entities are defined with source and target nodes, along with a type indicating the nature of the relationship.
 
-Make sure to give only the json string output no text other than that and the main json should have 2 properties the nodes and edges. Nodes should have a array that has objects each a node. Edges should have a array that has objects each a edge.
+Make sure to give only the json string output no text other than that and the main json should have 2 properties the nodes and edges. Nodes should have a array that has objects each a node. Edges should have a array that has objects each a edge. Make sure to add a property at the end of the json called end with value empty brackets [].
 
 I want you to analyse the below data and convert into the structure mentioned above:"""
 
