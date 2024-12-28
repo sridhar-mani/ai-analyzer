@@ -2,6 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import Sidebar from "./components/Sidebar";
 import MainContent from "./components/MainContent";
 import useAiStore from "./store/useAiStore";
+import { sanitizeGraphData } from "./utils/validation";
 // import VTKLoader from "./vTkviewer.jsx";
 
 function App() {
@@ -64,12 +65,18 @@ function App() {
 
   useEffect(()=>{
 
-    if( fileData.cases[curCase] && fileData.cases[curCase].ai_analysis){
-    setGraphData({entities:[...(fileData.cases[curCase].ai_analysis.nodes)], relationships:[...(fileData.cases[curCase].ai_analysis.edges)]})
+    if (fileData?.cases?.[curCase]?.ai_analysis) {
+      const rawGraphData = {
+        entities: fileData.cases[curCase].ai_analysis.nodes || [],
+        relationships: fileData.cases[curCase].ai_analysis.edges || []
+      };
+      
+
+      const sanitizedData = sanitizeGraphData(rawGraphData);
+      setGraphData(sanitizedData);
     }
 
-
-  },[curCase,fileData,totalData])
+  },[curCase,fileData])
 
   
 

@@ -1,4 +1,4 @@
-import { GraphData } from '../types/graph';
+import { GraphData } from '../store/useAiStore';
 import { EdgeDefinition, NodeDefinition, Stylesheet } from 'cytoscape';
 
 export const createElements = (data: GraphData): (NodeDefinition | EdgeDefinition)[] => {

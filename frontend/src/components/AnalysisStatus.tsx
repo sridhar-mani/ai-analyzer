@@ -9,6 +9,13 @@ interface AnalysisStatusProps {
 const AnalysisStatus: React.FC<AnalysisStatusProps> = ({ status, message }) => {
   const getStatusContent = () => {
     switch (status) {
+      case 'idle':
+        return(
+          <div className="flex items-center space-x-2 text-indigo-600">
+            <Loader2 className="w-5 h-5 animate-spin" />
+            <span>Upload documents...</span>
+          </div>
+        )
       case 'analyzing':
         return (
           <div className="flex items-center space-x-2 text-indigo-600">
