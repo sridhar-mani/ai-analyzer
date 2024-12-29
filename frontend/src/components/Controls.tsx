@@ -1,6 +1,13 @@
 import React from 'react';
 import { ZoomIn, ZoomOut, Maximize2, RotateCcw } from 'lucide-react';
-import { ControlsProps } from '../types/controls';
+
+
+export interface ControlsProps {
+  onZoomIn: () => void;
+  onZoomOut: () => void;
+  onFit: () => void;
+  onReset: () => void;
+}
 
 const Controls: React.FC<ControlsProps> = ({ 
   onZoomIn, 

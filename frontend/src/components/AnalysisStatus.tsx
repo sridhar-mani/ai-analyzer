@@ -11,9 +11,8 @@ const AnalysisStatus: React.FC<AnalysisStatusProps> = ({ status, message }) => {
     switch (status) {
       case 'idle':
         return(
-          <div className="flex items-center space-x-2 text-indigo-600">
-            <Loader2 className="w-5 h-5 animate-spin" />
-            <span>Upload documents...</span>
+          <div className="flex items-center space-x-2 ">
+            <span>Document Upload Pending</span>
           </div>
         )
       case 'analyzing':

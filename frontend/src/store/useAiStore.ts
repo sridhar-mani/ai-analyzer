@@ -1,8 +1,46 @@
 import { create } from "zustand";
 
+type Entity = {
+  id: string;
+  label: string;
+  type?: string;
+  isAnomaly?: boolean;
+  location?:string;
+  role?:string;
+  contact?:string;
+  affiliation?:string;
+  
+discovery_date?:string
+relationship_strength?:string; 
+
+propertyType?:string
+email?:string;
+
+};
+
+type rel = {
+  id: string;
+  label: string;
+  type?: string;
+  isAnomaly?: boolean;
+  location?:string;
+  role?:string;
+  contact?:string;
+  affiliation?:string;
+  source?:string;
+  target?:string;
+  propertyType?:string
+  
+discovery_date?:string
+relationship_strength?:string; 
+
+email?:string;
+
+}
+
 export interface GraphData {
-  entities: unknown[];
-  relationships: unknown[];
+  entities: Entity[];
+  relationships: rel[];
 }
 
 export interface FileData {

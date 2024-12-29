@@ -7,7 +7,6 @@ import { useGraphControls } from '../hooks/useGraphControls';
 import { defaultLayoutOptions } from '../utils/layout';
 import Controls from './Controls';
 
-// Register the cola layout
 cytoscape.use(cola);
 
 

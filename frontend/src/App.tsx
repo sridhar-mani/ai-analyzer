@@ -3,10 +3,8 @@ import Sidebar from "./components/Sidebar";
 import MainContent from "./components/MainContent";
 import useAiStore from "./store/useAiStore";
 import { sanitizeGraphData } from "./utils/validation";
-// import VTKLoader from "./vTkviewer.jsx";
 
 function App() {
-  // const [analysisStatus, setAnalysisStatus] = useState<>("idle");
   const {
     fileData,
     setFileData,
@@ -42,7 +40,6 @@ function App() {
 
       const data = await res.json();
 
-        // Validate data structure
         if (!data?.data?.[curCase]?.cases?.[curCase]?.ai_analysis) {
           throw new Error('Invalid data structure received from server');
         }
@@ -55,11 +52,8 @@ function App() {
       console.log("Error in fetching the response", er);
     }
 
-    // Simulate document analysis
     setTimeout(() => {
       setAnalysisStatus("complete");
-      // In a real application, you would process the files here
-      // and update the graph data with the results
     }, 2000);
   }, []);
 
