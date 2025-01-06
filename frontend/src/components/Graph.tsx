@@ -19,6 +19,8 @@ const Graph = ({ data }) => {
     handleReset
   } = useGraphControls(cyRef);
 
+  if(!(data.entities.length>0 || data.relationships.length>0)) return
+
   return (
     <div className="w-full h-full relative">
       <CytoscapeComponent

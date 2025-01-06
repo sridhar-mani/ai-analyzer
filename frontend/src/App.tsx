@@ -44,6 +44,8 @@ function App() {
           throw new Error('Invalid data structure received from server');
         }
 
+      
+
       console.log(data.data[curCase].cases[curCase].ai_analysis);
       addFileData(data)
       setFileData(data.data[curCase])
