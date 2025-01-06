@@ -26,7 +26,7 @@ function App() {
       console.log("sending file", f.name);
     });
     try {
-      const res = await fetch("http://localhost:2345/analyze", {
+      const res = await fetch("http://localhost:8380/analyze", {
         method: "POST",
         headers: {
           accept: "application/json",

@@ -142,57 +142,6 @@ Copy code
     return prompt
 
 
-def restructure_prompt(original_prompt):
-    improvement_prompt = f"""
-    As an AI language model expert, your task is to analyze and improve the following prompt. 
-    The prompt is designed to extract entity recognition, relationship extraction, and anomaly detection from legal case content.
-    Please suggest improvements to make the prompt more effective, clear, and likely to yield accurate results.
-
-    Original Prompt:
-    {original_prompt}
-
-    Please provide an improved version of this prompt, addressing the following aspects:
-    1. Clarity: Ensure the instructions are clear and unambiguous.
-    2. Specificity: Add more specific guidelines for entity recognition, relationship extraction, and anomaly detection.
-    3. Structure: Improve the structure to make it easier for the model to follow and respond accurately.
-    4. Completeness: Add any missing elements that could help in getting a more comprehensive analysis.
-
-    Provide only the improved prompt without any additional explanations.
-    """
-
-    try:
-        response = ollama.chat(
-            model="mistral:instruct",
-            messages=[
-                {
-                    'role': 'system',
-                    'content': 'You are an expert AI prompt engineer, skilled at improving prompts for optimal results.'
-                },
-                {
-                    'role': 'user',
-                    'content': improvement_prompt
-                }
-            ],
-            options={
-                "num_predict": 4096,
-                "stop": ["\n\n\n"],
-                "temperature": 0.7
-            }
-        )
-
-        if hasattr(response, 'message'):
-            improved_prompt = response.message.content.strip()
-            logger.info("Successfully restructured the prompt")
-            return improved_prompt
-        else:
-            logger.warning("Failed to get a response for prompt restructuring")
-            return original_prompt
-
-    except Exception as e:
-        logger.error(f"Error in restructuring prompt: {str(e)}")
-        return original_prompt
-
-
 def parse_response(response: Dict[str, Any]) -> dict:
     try:
         logger.info("Starting response parsing")
@@ -207,8 +156,11 @@ def parse_response(response: Dict[str, Any]) -> dict:
         json_cleaned = content.replace('\n', '').replace('\r', '')
         
         json_cleaned=json_cleaned.replace('```','')
-        
-        json_cleaned = '{"nodes"'+json_cleaned.split('"nodes"')[1]
+        if 'Nodes:' in json_cleaned:
+          json_cleaned = '{"nodes"'+json_cleaned.split('nodes')[1]
+        else:
+          json_cleaned = '{"nodes"'+json_cleaned.split('"nodes"')[1]
+            
 
         # Try loading the cleaned JSON with hjson, falling back to json
         try:

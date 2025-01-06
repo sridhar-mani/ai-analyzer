@@ -1,4 +1,4 @@
-
+import json
 import ollama
 import logging
 import traceback
@@ -8,8 +8,8 @@ from fastapi.responses import JSONResponse
 from models.models import CaseInfo
 from libs.prompt_and_parse import parse_response, create_extract_prompt
 from libs.file_reader import UniversalDocumentReader
+from libs.case_processor import CaseProcessor
 import hjson
-from libs.prompt_and_parse import restructure_prompt
 
 
 logging.basicConfig(level=logging.DEBUG)
@@ -17,6 +17,7 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
+case_processor = CaseProcessor()
 
 MODELS = ["openhermes:latest", "mistral:instruct"]
 
@@ -44,8 +45,24 @@ async def analyze_doc(files: List[UploadFile] = File(...)) -> dict:
                         case_content = case_data['content']
                         case_headline = case_data['headline']
                         case_data['page_number'] = case_id
+
+                        initial_analysis = case_processor.analyze_case({
+                            'headline':case_headline,
+                            'content':case_content
+                        })
+
+                        similar_cases = initial_analysis.get('similar_cases',[])
                         
+                        enchanced_prompt = f"""
+                        Similar case for reference:
+                        {json.dumps(similar_cases,indent=2)}
+
+                        Based on these similar cases, analyze the following case:
+                        """
+                        
+
                         prompt = create_extract_prompt(case_headline, case_content)
+                        full_prompt = enchanced_prompt+prompt
                         
                         for model in MODELS:
                             try:
@@ -56,7 +73,7 @@ async def analyze_doc(files: List[UploadFile] = File(...)) -> dict:
                                         'content': 'You are a skilled data analyst able to extract entity recognition, relationship extraction and anomaly detection'
                                     }, {
                                         'role': 'user',
-                                        'content': prompt
+                                        'content': full_prompt
                                     }],
                                     options={
                                         "num_predict": 4096,
@@ -70,6 +87,11 @@ async def analyze_doc(files: List[UploadFile] = File(...)) -> dict:
                                     if content:
                                         parsed_response = parse_response({'response': content})
                                         if parsed_response:
+                                            case_processor.store_successful_case(
+                                                case_content,
+                                                initial_analysis['type'],
+                                                parsed_response
+                                            )
                                             break
                                     else:
                                         logger.warning(f"Empty content for case {case_id} using model {model}")
