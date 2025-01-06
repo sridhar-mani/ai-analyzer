@@ -20,9 +20,9 @@ class CaseProcessor:
         self.collection = self._initialize_collection()
 # text splitter for chunking large docs
         self.text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=1000,
-            chunk_overlap = 200,
-            separators = ['\n\n','\n',' ','']
+            chunk_size=500,
+            chunk_overlap = 50,
+            separators = ['\n\n','\n',' ','','. ']
         )
         self.case_types ={
             'THEFT': ['theft', 'stolen', 'robbery', 'burglary'],
@@ -92,58 +92,53 @@ class CaseProcessor:
 
             return collection
 
-    def get_similar_cases(self,case_content: str, case_type:str,n_results: int = 2) -> List[Dict[str,any]]:
+    def get_similar_cases(self, case_content: List[str], case_type: str, n_results: int = 2) -> List[Dict[str, Any]]:
         try:
-
-            content_chunks = self.text_splitter.split_text(case_content)
-            all_results =[]
+            # Join array into single string for splitting
+            content_text = " ".join(case_content)
+            content_chunks = self.text_splitter.split_text(content_text)
+            all_results = []
 
             for chunk in content_chunks:
                 results = self.collection.query(
                     query_texts=[chunk],
                     n_results=n_results,
-                    where={
-                        'type': case_type
-                    }
+                    where={"type": case_type}
                 )
 
-                distances = results.get('distances',[[]])[0]
-                documents = results.get('documents',[[]])[0]
-                metadatas = results.get('metadatas',[[]])[0]
+                # Fix iteration over results
+                for doc, metadata, distance in zip(
+                    results.get('documents', [[]])[0],
+                    results.get('metadatas', [[]])[0],
+                    results.get('distances', [[]])[0]
+                ):
+                    similarity_score = 1 - distance
+                    try:
+                        analysis = json.loads(metadata['analysis'])
+                        all_results.append({
+                            'type': metadata['type'],
+                            'content': doc,
+                            'analysis': analysis,
+                            'similarity_score': similarity_score
+                        })
+                    except Exception as e:
+                        logger.warning(f"Error parsing similar case: {str(e)}")
+                        continue
 
-                for idx , (doc,metadata,distance) in enumerate(results['documents'][0]):
-                    similarity_score = 1-distance
-
-                    if similarity_score >= similarity_score:
-                        try:
-                            analysis = json.loads(metadata['analysis'])
-                            all_results.append(
-                                {
-                                    'type':metadata['type'],
-                                    'content':doc,
-                                    'analysis':analysis,
-                                    'similarity_score':similarity_score
-                                }
-                            )
-                        except Exception as e:
-                            logger.warning(f"Error parsing similar case: {str(e)}")
-                            continue
-
-                
-            unique_results ={}
+            # Fix unique results key construction
+            unique_results = {}
             for result in all_results:
-                result_key = f"{result['type']}_result{['content']}"
+                result_key = f"{result['type']}_{hash(result['content'])}"
                 if result_key not in unique_results or result['similarity_score'] > unique_results[result_key]['similarity_score']:
                     unique_results[result_key] = result
-            sorted_results = sorted(
-                unique_results.values(),
-                key= lambda x:x['similarity_score'],
-                reverse=True
-            )
 
-            return sorted_results[:n_results]
+            return sorted(
+                unique_results.values(),
+                key=lambda x: x['similarity_score'],
+                reverse=True
+            )[:n_results]
         except Exception as e:
-            logger.error(f'Error getting similar cases:{str(e)}')
+            logger.error(f'Error getting similar cases: {str(e)}')
             return []
 
     def store_successful_case(self,case_content: str,case_type: str,analysis:Dict[str,Any]):
@@ -208,18 +203,21 @@ class CaseProcessor:
 
     def detect_cases_types(self, content:str)-> str:
         content = [ line.lower() for line in content if len(content)!=0]
-        max_matches = 0
-        detected_type = "OTHER"
+        matches={
+            'THEFT': 0,
+            'DRUG_TRAFFICKING':0,
+            'FRAUD': 0,
+            'GANG_ACTIVITY': 0,
+            'CYBERCRIME':0
+        }
+            
         
         for case_type, patterns in self.case_types.items():
-            matches=0
             for each_line in content:
-                matches = sum(1 for pattern in patterns if pattern in each_line)
-                if matches>0:
-                    break
-            if matches > max_matches:
-                max_matches = matches
-                detected_type = case_type
+                for pattern in patterns:
+                    if pattern in each_line:
+                        matches[case_type]+=1
+        detected_type = max(matches, key=matches.get) if matches else "OTHER"
         return detected_type
     
     def analyze_case(self,case:Dict[str,Any]) -> Dict[str,Any]:

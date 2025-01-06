@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
 import cytoscape from 'cytoscape';
 import cola from 'cytoscape-cola';
@@ -12,6 +12,8 @@ cytoscape.use(cola);
 
 const Graph = ({ data }) => {
   const cyRef = useRef<cytoscape.Core | null>(null);
+
+  const [nodeData,setNodeData ] = useState(null)
   const {
     handleZoomIn,
     handleZoomOut,
@@ -21,6 +23,13 @@ const Graph = ({ data }) => {
 
   if(!(data.entities.length>0 || data.relationships.length>0)) return
 
+  const handleNodeClick = (event)=>{
+    const node = event.target
+    const nodeData = node.data()
+    setNodeData(nodeData)
+    console.log(nodeData);
+  }
+
   return (
     <div className="w-full h-full relative">
       <CytoscapeComponent
@@ -29,6 +38,7 @@ const Graph = ({ data }) => {
         layout={defaultLayoutOptions}
         cy={(cy) => {
           cyRef.current = cy;
+          cy.on('tap','node',handleNodeClick)
         }}
         className="w-full h-full"
       />
