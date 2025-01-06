@@ -2,7 +2,7 @@ from typing import List, Dict, Any
 import re
 import json
 from langchain.text_splitter import RecursiveCharacterTextSplitter 
-from langchain.embeddings import OllamaEmbeddings
+from langchain_community.embeddings import OllamaEmbeddings
 import logging
 import chromadb
 from chromadb.config import Settings
@@ -10,7 +10,7 @@ from chromadb.config import Settings
 logger = logging.getLogger(__name__)
 
 class CaseProcessor:
-    def __init__(self,host: str = "localhost", port: int =8000):
+    def __init__(self,host: str = "localhost", port: int =6789):
         
 # initializing chromadb (embedding client)
         self.client = chromadb.HttpClient(host=host,port=port)
@@ -95,7 +95,7 @@ class CaseProcessor:
     def get_similar_cases(self,case_content: str, case_type:str,n_results: int = 2) -> List[Dict[str,any]]:
         try:
 
-            content_chunks = self.text_splitter(case_content)
+            content_chunks = self.text_splitter.split_text(case_content)
             all_results =[]
 
             for chunk in content_chunks:
@@ -114,7 +114,7 @@ class CaseProcessor:
                 for idx , (doc,metadata,distance) in enumerate(results['documents'][0]):
                     similarity_score = 1-distance
 
-                    if similarity_score > = similarity_score:
+                    if similarity_score >= similarity_score:
                         try:
                             analysis = json.loads(metadata['analysis'])
                             all_results.append(
@@ -150,6 +150,8 @@ class CaseProcessor:
         try:
             chunks  = self.text_splitter.split_text(case_content)
             for idx,chk in enumerate(chunks):
+                case_id=f"case_{hash(case_content)(idx)}"
+                
                 self.collection.add(
                 documents=[chk],
                     metadatas=[
