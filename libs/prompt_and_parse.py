@@ -11,7 +11,7 @@ import demjson3
 logger = logging.getLogger(__name__)
 
 def create_extract_prompt(headline: List[str],content: str) -> str:
-    prompt = """For this task, process a given paragraph or case scenario and generate a structured output that highlights the key entities, their relationships, and the phases of the event. The input text can describe various types of events such as criminal investigations, business operations, or general cases involving people, organizations, and actions. Your goal is to identify entities like people, locations, organizations, and objects, and map out the relationships between them. Additionally, break down the event into phases like discovery, investigation, intervention, and resolution.
+    prompt = """For this task, process a given paragraph or case scenario and generate a structured output that highlights the key entities, their relationships, and the phases of the event. The input text can describe various types of events such as criminal investigations, business operations, or general cases involving people, organizations, and actions. Your goal is to identify entities like people, locations, organizations, and objects, and map out the relationships between them. 
 
 Steps for Processing the Input:
 Entity Extraction:
@@ -56,7 +56,6 @@ Make sure the source are target of each edge is present as a node in the node ar
 
 Expected Output Format:
 json
-Copy code
 {
   "nodes": [
     {
@@ -111,24 +110,6 @@ Copy code
       "type": "Reports Suspicious Activity",
       "relationship_strength": "Medium"
     }
-  ],
-  "event_phases": [
-    {
-      "phase": "Discovery",
-      "description": "Suspicious van and remote warehouse area."
-    },
-    {
-      "phase": "Investigation",
-      "description": "Surveillance leading to the discovery of drugs and the identification of the distributor."
-    },
-    {
-      "phase": "Intervention",
-      "description": "Arrests and ongoing investigations."
-    },
-    {
-      "phase": "Resolution",
-      "description": "Public urged for vigilance and announcement of arrests."
-    }
   ]
 }
   "end": []
@@ -161,6 +142,8 @@ def parse_response(response: Dict[str, Any]) -> dict:
         else:
           json_cleaned = '{"nodes"'+json_cleaned.split('"nodes"')[1]
             
+        if 'nodes' in json_cleaned:
+            json_cleaned = '{"nodes"'+json_cleaned.split('"nodes"')[1]
 
         # Try loading the cleaned JSON with hjson, falling back to json
         try:

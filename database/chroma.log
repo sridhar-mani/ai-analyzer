@@ -1,0 +1,494 @@
+[33mWARNING[0m:  [07-01-2025 10:00:47] chroma_server_nofile is not supported on Windows. chroma_server_nofile will not be set.
+[32mINFO[0m:     [07-01-2025 10:00:48] Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[36mDEBUG[0m:    [07-01-2025 10:00:48] Starting component System
+[36mDEBUG[0m:    [07-01-2025 10:00:48] Starting component OpenTelemetryClient
+[36mDEBUG[0m:    [07-01-2025 10:00:48] Starting component SqliteDB
+[36mDEBUG[0m:    [07-01-2025 10:00:48] Starting component SimpleQuotaEnforcer
+[36mDEBUG[0m:    [07-01-2025 10:00:48] Starting component Posthog
+[36mDEBUG[0m:    [07-01-2025 10:00:48] Starting component SimpleRateLimitEnforcer
+[36mDEBUG[0m:    [07-01-2025 10:00:48] Starting component LocalSegmentManager
+[36mDEBUG[0m:    [07-01-2025 10:00:48] Starting component LocalExecutor
+[36mDEBUG[0m:    [07-01-2025 10:00:48] Starting component SegmentAPI
+[32mINFO[0m:     [07-01-2025 10:00:49] Started server process [[36m8296[0m]
+[32mINFO[0m:     [07-01-2025 10:00:49] Waiting for application startup.
+[32mINFO[0m:     [07-01-2025 10:00:49] Application startup complete.
+[32mINFO[0m:     [07-01-2025 10:00:49] Uvicorn running on [1mhttp://localhost:6789[0m (Press CTRL+C to quit)
+[32mINFO[0m:     [07-01-2025 10:01:27] ::1:51678 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:01:27] ::1:51679 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:01:27] ::1:51679 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:01:27] ::1:51678 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/cases HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 10:01:27] ::1:51678 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:03:09] ::1:51737 - "GET /api/v2/pre-flight-checks HTTP/1.1" 200
+[36mDEBUG[0m:    [07-01-2025 10:03:09] Starting component PersistentLocalHnswSegment
+[32mINFO[0m:     [07-01-2025 10:03:09] ::1:51737 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/add HTTP/1.1" 201
+[32mINFO[0m:     [07-01-2025 10:03:17] ::1:51751 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:03:17] ::1:51752 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:03:17] ::1:51752 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:03:17] ::1:51751 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/cases HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:03:27] ::1:51764 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:03:27] ::1:51764 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:03:27] ::1:51764 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:05:00] ::1:51822 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:05:00] ::1:51822 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:05:00] ::1:51822 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:06:22] ::1:51884 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:06:22] ::1:51885 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:06:22] ::1:51885 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:06:22] ::1:51884 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/cases HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:07:48] ::1:51945 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:07:48] ::1:51946 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:07:48] ::1:51946 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:07:48] ::1:51945 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/cases HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:18:32] ::1:52243 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:27:25] ::1:52541 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:27:25] ::1:52541 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:34:16] ::1:52910 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:34:16] ::1:52911 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:34:16] ::1:52911 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:34:16] ::1:52910 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/cases HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:35:11] ::1:52968 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:35:11] ::1:52969 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:35:11] ::1:52969 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:35:11] ::1:52968 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/cases HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:35:13] ::1:52974 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:35:13] ::1:52975 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:35:13] ::1:52975 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:35:13] ::1:52974 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/cases HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:36:44] ::1:53041 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:40:05] ::1:53153 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:40:14] ::1:53158 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:51:54] ::1:53933 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:51:54] ::1:53934 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:51:54] ::1:53934 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:51:55] ::1:53933 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/cases HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:52:46] ::1:54000 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:52:46] ::1:54001 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:52:46] ::1:54001 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:52:46] ::1:54000 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/cases HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:52:54] ::1:54020 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:52:54] ::1:54022 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:52:54] ::1:54022 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:52:54] ::1:54020 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/cases HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:53:37] ::1:54058 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:53:47] ::1:54067 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 10:53:49] ::1:54067 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:04:11] ::1:54545 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:04:11] ::1:54546 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:04:11] ::1:54546 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:04:11] ::1:54545 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/cases HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:04:35] ::1:54565 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:04:35] ::1:54566 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:04:35] ::1:54566 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:04:35] ::1:54565 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/cases HTTP/1.1" 200
+[33mWARNING[0m:  [07-01-2025 11:05:11] Number of requested results 4 is greater than number of elements in index 2, updating n_results = 2
+[32mINFO[0m:     [07-01-2025 11:05:11] ::1:54607 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[33mWARNING[0m:  [07-01-2025 11:05:30] Number of requested results 4 is greater than number of elements in index 2, updating n_results = 2
+[32mINFO[0m:     [07-01-2025 11:05:30] ::1:54620 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[33mWARNING[0m:  [07-01-2025 11:05:42] Number of requested results 4 is greater than number of elements in index 2, updating n_results = 2
+[32mINFO[0m:     [07-01-2025 11:05:42] ::1:54633 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:07:03] ::1:54701 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:07:11] ::1:54722 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:07:11] ::1:54723 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:07:11] ::1:54723 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:07:11] ::1:54722 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/cases HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:07:46] ::1:54755 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:07:46] ::1:54756 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:07:46] ::1:54756 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:07:46] ::1:54755 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/cases HTTP/1.1" 200
+[33mWARNING[0m:  [07-01-2025 11:08:03] Number of requested results 4 is greater than number of elements in index 2, updating n_results = 2
+[32mINFO[0m:     [07-01-2025 11:08:03] ::1:54765 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[33mWARNING[0m:  [07-01-2025 11:11:07] Number of requested results 4 is greater than number of elements in index 2, updating n_results = 2
+[32mINFO[0m:     [07-01-2025 11:11:07] ::1:54854 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[33mWARNING[0m:  [07-01-2025 11:11:16] Number of requested results 4 is greater than number of elements in index 2, updating n_results = 2
+[32mINFO[0m:     [07-01-2025 11:11:16] ::1:54856 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:22:57] ::1:55522 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:22:58] ::1:55523 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:22:58] ::1:55523 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:22:58] ::1:55522 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/cases HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:26:15] ::1:55697 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:26:15] ::1:55698 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:26:15] ::1:55698 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:26:16] ::1:55697 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/cases HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:26:16] ::1:55697 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/get HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:26:16] ::1:55697 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:26:30] ::1:55741 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:26:30] ::1:55742 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:26:30] ::1:55742 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:26:30] ::1:55741 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/cases HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:26:30] ::1:55741 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/get HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:26:30] ::1:55741 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[33mWARNING[0m:  [07-01-2025 11:28:24] Number of requested results 4 is greater than number of elements in index 2, updating n_results = 2
+[32mINFO[0m:     [07-01-2025 11:28:24] ::1:55869 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[33mWARNING[0m:  [07-01-2025 11:30:15] Number of requested results 4 is greater than number of elements in index 2, updating n_results = 2
+[32mINFO[0m:     [07-01-2025 11:30:15] ::1:55940 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[33mWARNING[0m:  [07-01-2025 11:30:28] Number of requested results 4 is greater than number of elements in index 2, updating n_results = 2
+[32mINFO[0m:     [07-01-2025 11:30:28] ::1:55948 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:31:25] ::1:55999 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:31:25] ::1:56000 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:31:25] ::1:56000 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:31:26] ::1:55999 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/cases HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:31:26] ::1:55999 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/get HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:31:26] ::1:55999 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:32:30] ::1:56035 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:32:30] ::1:56036 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:32:30] ::1:56036 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:32:30] ::1:56035 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/cases HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:32:30] ::1:56035 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/get HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:32:30] ::1:56035 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:34:21] ::1:56111 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:35:29] ::1:56145 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:35:34] ::1:56149 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:38:12] 127.0.0.1:56313 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 11:38:12] 127.0.0.1:56313 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:38:13] 127.0.0.1:56313 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 11:38:13] 127.0.0.1:56313 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:38:17] 127.0.0.1:56313 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 11:38:17] 127.0.0.1:56313 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:38:21] 127.0.0.1:56313 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 11:38:21] 127.0.0.1:56313 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:38:28] 127.0.0.1:56313 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 11:38:28] 127.0.0.1:56313 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:38:44] 127.0.0.1:56313 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 11:38:44] 127.0.0.1:56313 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:38:46] 127.0.0.1:56313 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 11:38:46] 127.0.0.1:56313 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 11:39:22] 127.0.0.1:56355 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 11:39:22] 127.0.0.1:56355 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 12:10:57] 127.0.0.1:57257 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 12:10:57] 127.0.0.1:57257 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 12:10:58] 127.0.0.1:57257 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 12:10:58] 127.0.0.1:57257 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 12:11:00] 127.0.0.1:57257 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 12:11:00] 127.0.0.1:57257 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 12:11:04] 127.0.0.1:57257 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 12:11:04] 127.0.0.1:57257 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 12:12:40] 127.0.0.1:57354 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 12:12:40] 127.0.0.1:57354 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 12:12:41] 127.0.0.1:57354 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 12:12:41] 127.0.0.1:57354 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 12:14:43] 127.0.0.1:57556 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 12:14:43] 127.0.0.1:57556 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 12:14:47] 127.0.0.1:57556 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 12:14:47] 127.0.0.1:57556 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 12:17:03] 127.0.0.1:57683 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 12:17:03] 127.0.0.1:57683 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 12:17:05] 127.0.0.1:57683 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 12:17:05] 127.0.0.1:57683 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 12:17:22] 127.0.0.1:57683 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 12:17:22] 127.0.0.1:57683 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 12:17:58] 127.0.0.1:57739 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 12:17:58] 127.0.0.1:57739 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 12:22:06] 127.0.0.1:58093 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 12:22:06] 127.0.0.1:58093 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 12:22:07] 127.0.0.1:58093 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 12:22:07] 127.0.0.1:58093 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 12:22:09] 127.0.0.1:58093 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 12:22:09] 127.0.0.1:58093 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 12:22:13] 127.0.0.1:58093 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 12:22:13] 127.0.0.1:58093 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 12:23:16] 127.0.0.1:58148 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 12:23:16] 127.0.0.1:58148 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 12:23:17] 127.0.0.1:58148 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 12:23:17] 127.0.0.1:58148 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 12:23:19] 127.0.0.1:58148 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 12:23:19] 127.0.0.1:58148 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 12:23:23] 127.0.0.1:58148 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 12:23:23] 127.0.0.1:58148 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 12:30:59] 127.0.0.1:58504 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 12:30:59] 127.0.0.1:58504 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 12:31:01] 127.0.0.1:58504 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 12:31:01] 127.0.0.1:58504 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 12:32:02] 127.0.0.1:58522 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 12:32:02] 127.0.0.1:58522 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 12:37:48] 127.0.0.1:58676 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 12:37:48] 127.0.0.1:58676 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 13:03:44] ::1:59913 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 13:03:44] ::1:59914 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 13:03:44] ::1:59914 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 13:03:44] ::1:59913 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/cases HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 13:03:44] ::1:59913 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/get HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 13:03:44] ::1:59913 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 13:03:59] ::1:59944 - "GET /api/v2/auth/identity HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 13:03:59] ::1:59945 - "GET /api/v2/tenants/default_tenant HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 13:03:59] ::1:59945 - "GET /api/v2/tenants/default_tenant/databases/default_database HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 13:03:59] ::1:59944 - "GET /api/v2/tenants/default_tenant/databases/default_database/collections/cases HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 13:03:59] ::1:59944 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/get HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 13:03:59] ::1:59944 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 13:04:10] ::1:59959 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 13:04:10] ::1:59959 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 13:04:10] ::1:59959 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 13:08:18] ::1:60145 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 13:08:18] ::1:60145 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 13:08:18] ::1:60145 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[33mWARNING[0m:  [07-01-2025 13:10:13] Number of requested results 4 is greater than number of elements in index 2, updating n_results = 2
+[32mINFO[0m:     [07-01-2025 13:10:13] ::1:60247 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[33mWARNING[0m:  [07-01-2025 13:10:13] Number of requested results 4 is greater than number of elements in index 2, updating n_results = 2
+[32mINFO[0m:     [07-01-2025 13:10:13] ::1:60247 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[33mWARNING[0m:  [07-01-2025 13:10:13] Number of requested results 4 is greater than number of elements in index 2, updating n_results = 2
+[32mINFO[0m:     [07-01-2025 13:10:13] ::1:60247 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[33mWARNING[0m:  [07-01-2025 13:11:41] Number of requested results 4 is greater than number of elements in index 2, updating n_results = 2
+[32mINFO[0m:     [07-01-2025 13:11:41] ::1:60285 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[33mWARNING[0m:  [07-01-2025 13:11:41] Number of requested results 4 is greater than number of elements in index 2, updating n_results = 2
+[32mINFO[0m:     [07-01-2025 13:11:41] ::1:60285 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[33mWARNING[0m:  [07-01-2025 13:11:41] Number of requested results 4 is greater than number of elements in index 2, updating n_results = 2
+[32mINFO[0m:     [07-01-2025 13:11:41] ::1:60285 - "POST /api/v2/tenants/default_tenant/databases/default_database/collections/d1feaf32-cf91-4f55-9693-89736ab829e1/query HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 14:26:22] 127.0.0.1:63322 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 14:26:22] 127.0.0.1:63322 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 14:26:23] 127.0.0.1:63325 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 14:26:23] 127.0.0.1:63325 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 14:26:25] 127.0.0.1:63325 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 14:26:25] 127.0.0.1:63325 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 14:26:29] 127.0.0.1:63325 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 14:26:29] 127.0.0.1:63325 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 14:26:45] Shutting down
+[32mINFO[0m:     [07-01-2025 14:26:45] Waiting for application shutdown.
+[36mDEBUG[0m:    [07-01-2025 14:26:45] Stopping component System
+[36mDEBUG[0m:    [07-01-2025 14:26:45] Stopping component SegmentAPI
+[36mDEBUG[0m:    [07-01-2025 14:26:45] Stopping component LocalExecutor
+[36mDEBUG[0m:    [07-01-2025 14:26:45] Stopping component PersistentLocalHnswSegment
+[36mDEBUG[0m:    [07-01-2025 14:26:45] Stopping component LocalSegmentManager
+[36mDEBUG[0m:    [07-01-2025 14:26:45] Stopping component SimpleRateLimitEnforcer
+[36mDEBUG[0m:    [07-01-2025 14:26:45] Stopping component Posthog
+[36mDEBUG[0m:    [07-01-2025 14:26:45] Stopping component SimpleQuotaEnforcer
+[36mDEBUG[0m:    [07-01-2025 14:26:45] Stopping component SqliteDB
+[36mDEBUG[0m:    [07-01-2025 14:26:45] Stopping component OpenTelemetryClient
+[32mINFO[0m:     [07-01-2025 14:26:45] Application shutdown complete.
+[32mINFO[0m:     [07-01-2025 14:26:45] Finished server process [[36m8296[0m]
+[33mWARNING[0m:  [07-01-2025 14:26:52] chroma_server_nofile is not supported on Windows. chroma_server_nofile will not be set.
+[32mINFO[0m:     [07-01-2025 14:26:52] Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[36mDEBUG[0m:    [07-01-2025 14:26:52] Starting component System
+[36mDEBUG[0m:    [07-01-2025 14:26:52] Starting component OpenTelemetryClient
+[36mDEBUG[0m:    [07-01-2025 14:26:52] Starting component SqliteDB
+[36mDEBUG[0m:    [07-01-2025 14:26:52] Starting component SimpleQuotaEnforcer
+[36mDEBUG[0m:    [07-01-2025 14:26:52] Starting component Posthog
+[36mDEBUG[0m:    [07-01-2025 14:26:52] Starting component SimpleRateLimitEnforcer
+[36mDEBUG[0m:    [07-01-2025 14:26:52] Starting component LocalSegmentManager
+[36mDEBUG[0m:    [07-01-2025 14:26:52] Starting component LocalExecutor
+[36mDEBUG[0m:    [07-01-2025 14:26:52] Starting component SegmentAPI
+[32mINFO[0m:     [07-01-2025 14:26:52] Started server process [[36m26068[0m]
+[32mINFO[0m:     [07-01-2025 14:26:52] Waiting for application startup.
+[32mINFO[0m:     [07-01-2025 14:26:52] Application startup complete.
+[32mINFO[0m:     [07-01-2025 14:26:52] Uvicorn running on [1mhttp://localhost:6789[0m (Press CTRL+C to quit)
+[32mINFO[0m:     [07-01-2025 14:26:57] 127.0.0.1:63360 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 14:26:57] 127.0.0.1:63360 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 14:26:58] 127.0.0.1:63360 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 14:26:58] 127.0.0.1:63360 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 14:27:05] 127.0.0.1:63360 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 14:27:05] 127.0.0.1:63360 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 14:27:32] 127.0.0.1:63360 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 14:27:32] 127.0.0.1:63360 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 14:27:37] 127.0.0.1:63360 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 14:27:37] 127.0.0.1:63360 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 14:27:38] 127.0.0.1:63360 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 14:27:38] 127.0.0.1:63360 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 14:27:50] 127.0.0.1:63360 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 14:27:50] 127.0.0.1:63360 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 14:28:55] 127.0.0.1:63448 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 14:28:55] 127.0.0.1:63448 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 14:30:48] 127.0.0.1:63645 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 14:30:48] 127.0.0.1:63645 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 14:31:19] 127.0.0.1:63659 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 14:31:19] 127.0.0.1:63659 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 14:31:53] 127.0.0.1:63676 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 14:31:53] 127.0.0.1:63676 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 14:31:57] 127.0.0.1:63676 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 14:31:57] 127.0.0.1:63676 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 14:32:42] 127.0.0.1:63716 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 14:32:42] 127.0.0.1:63716 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 14:32:43] 127.0.0.1:63716 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 14:32:43] 127.0.0.1:63716 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 14:32:45] 127.0.0.1:63716 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 14:32:45] 127.0.0.1:63716 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 14:32:49] 127.0.0.1:63716 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 14:32:49] 127.0.0.1:63716 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 14:33:11] 127.0.0.1:63716 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 14:33:11] 127.0.0.1:63716 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 14:34:47] 127.0.0.1:63883 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 14:34:47] 127.0.0.1:63883 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 14:35:07] 127.0.0.1:63883 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 14:35:07] 127.0.0.1:63883 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 14:35:11] 127.0.0.1:63883 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 14:35:11] 127.0.0.1:63883 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 14:35:18] 127.0.0.1:63883 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 14:35:18] 127.0.0.1:63883 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 14:38:22] 127.0.0.1:64414 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 14:38:22] 127.0.0.1:64414 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 14:38:24] 127.0.0.1:64414 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 14:38:24] 127.0.0.1:64414 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 14:38:28] 127.0.0.1:64414 - "OPTIONS /api/v1/version HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 14:38:28] 127.0.0.1:64414 - "GET /api/v1/version HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 15:23:42] ::1:50624 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:23:42] ::1:50624 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:23:42] ::1:50624 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:24:18] ::1:50681 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:24:18] ::1:50681 - "GET /favicon.ico HTTP/1.1" 404
+[32mINFO[0m:     [07-01-2025 15:24:54] ::1:50732 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:24:54] ::1:50732 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:30:36] ::1:51194 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:30:39] ::1:51194 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:31:00] ::1:51194 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:31:02] ::1:51194 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:31:13] ::1:51194 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:31:18] ::1:51194 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:31:24] ::1:51194 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:31:29] ::1:51194 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:31:34] ::1:51194 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:31:35] ::1:51194 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:31:42] ::1:51194 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:31:50] ::1:51194 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:32:16] ::1:51194 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:32:18] ::1:51194 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:32:24] ::1:51194 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:32:36] ::1:51194 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:32:41] ::1:51194 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:32:50] ::1:51194 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:32:54] ::1:51194 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:32:55] ::1:51194 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:33:00] ::1:51194 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:33:08] ::1:51194 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:33:10] ::1:51194 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:33:21] ::1:51194 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:33:24] ::1:51194 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:33:25] ::1:51194 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:33:42] ::1:51194 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:33:43] ::1:51194 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:33:47] ::1:51194 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:33:51] ::1:51194 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:34:27] ::1:51493 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:34:30] ::1:51493 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:34:35] ::1:51493 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:34:51] ::1:51493 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:34:59] ::1:51493 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:35:05] ::1:51493 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:35:23] ::1:51493 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:35:24] ::1:51493 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:35:27] ::1:51493 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:35:29] ::1:51493 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:35:37] ::1:51493 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:35:38] ::1:51493 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:35:39] ::1:51493 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:35:46] ::1:51493 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:35:47] ::1:51493 - "GET /api/v1/tenants HTTP/1.1" 405
+[32mINFO[0m:     [07-01-2025 15:36:26] ::1:51626 - "OPTIONS /api/v1/list_collections HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 15:36:26] ::1:51627 - "OPTIONS /api/v1/list_collections HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 15:36:54] ::1:51627 - "OPTIONS /api/v1/list_collections HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 15:36:54] ::1:51626 - "OPTIONS /api/v1/list_collections HTTP/1.1" 400
+[31mERROR[0m:    [07-01-2025 15:36:54] Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python311\Lib\asyncio\events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python311\Lib\asyncio\proactor_events.py", line 162, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+[32mINFO[0m:     [07-01-2025 15:41:09] ::1:51938 - "OPTIONS /api/v1/list_collections HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 15:41:09] ::1:51939 - "OPTIONS /api/v1/list_collections HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 15:41:13] ::1:51948 - "GET /api/v1/root_structure HTTP/1.1" 404
+[32mINFO[0m:     [07-01-2025 15:41:22] ::1:51948 - "GET /api/v1/list_collections HTTP/1.1" 404
+[32mINFO[0m:     [07-01-2025 15:43:43] ::1:52180 - "OPTIONS /api/v1/list_collections HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 15:43:43] ::1:52181 - "OPTIONS /api/v1/list_collections HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 15:43:44] ::1:52181 - "OPTIONS /api/v1/list_collections HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 15:43:44] ::1:52180 - "OPTIONS /api/v1/list_collections HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 15:43:47] ::1:52180 - "OPTIONS /api/v1/list_collections HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 15:43:47] ::1:52181 - "OPTIONS /api/v1/list_collections HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 15:43:48] ::1:52181 - "OPTIONS /api/v1/list_collections HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 15:43:48] ::1:52180 - "OPTIONS /api/v1/list_collections HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 15:43:56] ::1:52180 - "OPTIONS /api/v1/list_collections HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 15:43:56] ::1:52181 - "OPTIONS /api/v1/list_collections HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 15:43:58] ::1:52181 - "OPTIONS /api/v1/list_collections HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 15:43:58] ::1:52181 - "OPTIONS /api/v1/list_collections HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 15:44:37] ::1:52271 - "GET /api/v1/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 15:44:37] ::1:52271 - "GET /api/v1/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 15:44:37] ::1:52272 - "GET /api/v1/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 15:44:38] ::1:52272 - "GET /api/v1/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 15:44:46] ::1:52272 - "GET /api/v1/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 15:44:49] ::1:52272 - "GET /api/v1/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 15:44:54] ::1:52272 - "GET /api/v1/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 15:45:10] ::1:52272 - "GET /api/v1/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 15:45:10] ::1:52272 - "GET /api/v1/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 15:45:11] ::1:52272 - "GET /api/v1/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 15:45:11] ::1:52272 - "GET /api/v1/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 15:45:11] ::1:52272 - "GET /api/v1/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 15:45:11] ::1:52272 - "GET /api/v1/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 15:45:11] ::1:52272 - "GET /api/v1/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 15:45:11] ::1:52272 - "GET /api/v1/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 15:45:15] ::1:52272 - "GET /api/v1/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 15:45:15] ::1:52272 - "GET /api/v1/heartbeat HTTP/1.1" 200
+[32mINFO[0m:     [07-01-2025 15:46:01] Shutting down
+[32mINFO[0m:     [07-01-2025 15:46:01] Waiting for application shutdown.
+[36mDEBUG[0m:    [07-01-2025 15:46:01] Stopping component System
+[36mDEBUG[0m:    [07-01-2025 15:46:01] Stopping component SegmentAPI
+[36mDEBUG[0m:    [07-01-2025 15:46:01] Stopping component LocalExecutor
+[36mDEBUG[0m:    [07-01-2025 15:46:01] Stopping component LocalSegmentManager
+[36mDEBUG[0m:    [07-01-2025 15:46:01] Stopping component SimpleRateLimitEnforcer
+[36mDEBUG[0m:    [07-01-2025 15:46:01] Stopping component Posthog
+[36mDEBUG[0m:    [07-01-2025 15:46:01] Stopping component SimpleQuotaEnforcer
+[36mDEBUG[0m:    [07-01-2025 15:46:01] Stopping component SqliteDB
+[36mDEBUG[0m:    [07-01-2025 15:46:01] Stopping component OpenTelemetryClient
+[32mINFO[0m:     [07-01-2025 15:46:01] Application shutdown complete.
+[32mINFO[0m:     [07-01-2025 15:46:01] Finished server process [[36m26068[0m]
+[33mWARNING[0m:  [07-01-2025 15:46:38] chroma_server_nofile is not supported on Windows. chroma_server_nofile will not be set.
+[32mINFO[0m:     [07-01-2025 15:46:39] Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[36mDEBUG[0m:    [07-01-2025 15:46:39] Starting component System
+[36mDEBUG[0m:    [07-01-2025 15:46:39] Starting component OpenTelemetryClient
+[36mDEBUG[0m:    [07-01-2025 15:46:39] Starting component SqliteDB
+[36mDEBUG[0m:    [07-01-2025 15:46:39] Starting component SimpleQuotaEnforcer
+[36mDEBUG[0m:    [07-01-2025 15:46:39] Starting component Posthog
+[36mDEBUG[0m:    [07-01-2025 15:46:39] Starting component SimpleRateLimitEnforcer
+[36mDEBUG[0m:    [07-01-2025 15:46:39] Starting component LocalSegmentManager
+[36mDEBUG[0m:    [07-01-2025 15:46:39] Starting component LocalExecutor
+[36mDEBUG[0m:    [07-01-2025 15:46:39] Starting component SegmentAPI
+[32mINFO[0m:     [07-01-2025 15:46:39] Started server process [[36m34336[0m]
+[32mINFO[0m:     [07-01-2025 15:46:39] Waiting for application startup.
+[32mINFO[0m:     [07-01-2025 15:46:39] Application startup complete.
+[32mINFO[0m:     [07-01-2025 15:46:39] Uvicorn running on [1mhttp://localhost:8000[0m (Press CTRL+C to quit)
+[33mWARNING[0m:  [07-01-2025 16:37:47] chroma_server_nofile is not supported on Windows. chroma_server_nofile will not be set.
+[32mINFO[0m:     [07-01-2025 16:37:48] Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[36mDEBUG[0m:    [07-01-2025 16:37:48] Starting component System
+[36mDEBUG[0m:    [07-01-2025 16:37:48] Starting component OpenTelemetryClient
+[36mDEBUG[0m:    [07-01-2025 16:37:48] Starting component SqliteDB
+[36mDEBUG[0m:    [07-01-2025 16:37:48] Starting component SimpleQuotaEnforcer
+[36mDEBUG[0m:    [07-01-2025 16:37:48] Starting component Posthog
+[36mDEBUG[0m:    [07-01-2025 16:37:48] Starting component SimpleRateLimitEnforcer
+[36mDEBUG[0m:    [07-01-2025 16:37:48] Starting component LocalSegmentManager
+[36mDEBUG[0m:    [07-01-2025 16:37:48] Starting component LocalExecutor
+[36mDEBUG[0m:    [07-01-2025 16:37:48] Starting component SegmentAPI
+[32mINFO[0m:     [07-01-2025 16:37:48] Started server process [[36m31308[0m]
+[32mINFO[0m:     [07-01-2025 16:37:48] Waiting for application startup.
+[32mINFO[0m:     [07-01-2025 16:37:48] Application startup complete.
+[32mINFO[0m:     [07-01-2025 16:37:48] Uvicorn running on [1mhttp://localhost:6789[0m (Press CTRL+C to quit)
+[32mINFO[0m:     [07-01-2025 16:38:40] ::1:56752 - "OPTIONS /api/v1/heartbeat HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 16:41:05] ::1:56903 - "GET / HTTP/1.1" 404
+[32mINFO[0m:     [07-01-2025 16:49:52] ::1:57509 - "OPTIONS /api/v1/collections HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 16:50:01] Shutting down
+[32mINFO[0m:     [07-01-2025 16:50:01] Waiting for application shutdown.
+[36mDEBUG[0m:    [07-01-2025 16:50:01] Stopping component System
+[36mDEBUG[0m:    [07-01-2025 16:50:01] Stopping component SegmentAPI
+[36mDEBUG[0m:    [07-01-2025 16:50:01] Stopping component LocalExecutor
+[36mDEBUG[0m:    [07-01-2025 16:50:01] Stopping component LocalSegmentManager
+[36mDEBUG[0m:    [07-01-2025 16:50:01] Stopping component SimpleRateLimitEnforcer
+[36mDEBUG[0m:    [07-01-2025 16:50:01] Stopping component Posthog
+[36mDEBUG[0m:    [07-01-2025 16:50:01] Stopping component SimpleQuotaEnforcer
+[36mDEBUG[0m:    [07-01-2025 16:50:01] Stopping component SqliteDB
+[36mDEBUG[0m:    [07-01-2025 16:50:01] Stopping component OpenTelemetryClient
+[32mINFO[0m:     [07-01-2025 16:50:01] Application shutdown complete.
+[32mINFO[0m:     [07-01-2025 16:50:01] Finished server process [[36m31308[0m]
+[33mWARNING[0m:  [07-01-2025 16:52:16] chroma_server_nofile is not supported on Windows. chroma_server_nofile will not be set.
+[32mINFO[0m:     [07-01-2025 16:52:17] Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+[36mDEBUG[0m:    [07-01-2025 16:52:17] Starting component System
+[36mDEBUG[0m:    [07-01-2025 16:52:17] Starting component OpenTelemetryClient
+[36mDEBUG[0m:    [07-01-2025 16:52:17] Starting component SqliteDB
+[36mDEBUG[0m:    [07-01-2025 16:52:17] Starting component SimpleQuotaEnforcer
+[36mDEBUG[0m:    [07-01-2025 16:52:17] Starting component Posthog
+[36mDEBUG[0m:    [07-01-2025 16:52:17] Starting component SimpleRateLimitEnforcer
+[36mDEBUG[0m:    [07-01-2025 16:52:17] Starting component LocalSegmentManager
+[36mDEBUG[0m:    [07-01-2025 16:52:17] Starting component LocalExecutor
+[36mDEBUG[0m:    [07-01-2025 16:52:17] Starting component SegmentAPI
+[32mINFO[0m:     [07-01-2025 16:52:17] Started server process [[36m2300[0m]
+[32mINFO[0m:     [07-01-2025 16:52:17] Waiting for application startup.
+[32mINFO[0m:     [07-01-2025 16:52:17] Application startup complete.
+[32mINFO[0m:     [07-01-2025 16:52:17] Uvicorn running on [1mhttp://localhost:6789[0m (Press CTRL+C to quit)
+[32mINFO[0m:     [07-01-2025 17:00:56] ::1:58384 - "OPTIONS /api/v1/collections HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 17:04:04] ::1:58577 - "OPTIONS /api/v1/collections HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 17:04:04] ::1:58577 - "OPTIONS /api/v1/collections HTTP/1.1" 400
+[32mINFO[0m:     [07-01-2025 17:08:10] ::1:58913 - "OPTIONS /api/v1/collections HTTP/1.1" 400
