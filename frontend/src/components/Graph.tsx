@@ -2,20 +2,19 @@ import React, { useEffect, useRef, useState } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
 import cytoscape from 'cytoscape';
 import cola from 'cytoscape-cola';
-import tippy from 'tippy.js';
-import 'tippy.js/dist/tippy.css'
 import { createElements, graphStyles } from '../utils/cytoscape';
 import { useGraphControls } from '../hooks/useGraphControls';
 import { defaultLayoutOptions } from '../utils/layout';
 import Controls from './Controls';
+import { Tooltip as ReactTooltip } from 'react-tooltip'
 
 cytoscape.use(cola);
 
 
 const Graph = ({ data }) => {
   const cyRef = useRef<cytoscape.Core | null>(null);
-
-  const [nodeData,setNodeData ] = useState(null)
+  const [tooltipContent, setTooltipContent] = useState(''); 
+  
   const {
     handleZoomIn,
     handleZoomOut,
@@ -23,42 +22,19 @@ const Graph = ({ data }) => {
     handleReset
   } = useGraphControls(cyRef);
 
-  useEffect(()=>{
-if(cyRef.current){
-  const cy = cyRef.current;
-
-  cy.on('mouseover','node',(e)=>{
-const node = e?.target;
-const nodeData = node.data();
-
-tippy(
-  node.popperRef(),{
-    content:`
-    <strong>Label:</strong> ${nodeData.Label}<br>
-                <strong>Type:</strong> ${nodeData.type}<br>
-            <strong>ID:</strong> ${nodeData.id}
-    `,
-    allowHTML:true,
-    arrow:true,
-    placement:'top'
-  }
-)
-
-  })
-
-  cy.on('mouseout','node',()=>{
-    tippy.destroy()
-  })
-}
-  },[])
-
   if(!(data.entities.length>0 || data.relationships.length>0)) return
 
   const handleNodeClick = (event)=>{
     const node = event.target
-    const nodeData = node.data()
-    setNodeData(nodeData)
-    console.log(nodeData);
+    const nodeData = node.data();
+
+    setTooltipContent(`
+      <strong>Label:</strong> ${nodeData.label}<br />
+      <strong>Type:</strong> ${nodeData.type}<br />
+      <strong>ID:</strong> ${nodeData.id}
+    `);
+
+    console.log(node);
   }
 
   return (
@@ -79,6 +55,7 @@ tippy(
         onFit={handleFit}
         onReset={handleReset}
       />
+      <ReactTooltip place="top" type="dark" effect="float" id='node-tt' html={true} getContent={()=> tooltipContent} />
     </div>
   );
 };
