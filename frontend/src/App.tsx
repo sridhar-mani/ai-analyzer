@@ -3,7 +3,7 @@ import Sidebar from "./components/Sidebar";
 import MainContent from "./components/MainContent";
 import useAiStore from "./store/useAiStore";
 import { sanitizeGraphData } from "./utils/validation";
-import {ChromaDBUI} from '../../../chromadb-ui/src/index'
+import {ChromaDBUI} from '@sridhar-mani/chromadb-ui'
 
 function App() {
   const {
@@ -82,19 +82,19 @@ function App() {
   }, []);
 
   return (
-    <div className="flex w-full min-h-screen bg-white">
-      {/* <Sidebar
+    <div className="flex min-w-full min-h-screen bg-gray-900">
+      <Sidebar
         status={analysisStatus}
         entities={graphData.entities}
         onFilesSelected={handleFilesSelected}
         onEntityClick={handleEntityClick}
       />
-      <MainContent data={graphData} /> */}
-      <ChromaDBUI config={{
+      <MainContent data={graphData} />
+      {/* <ChromaDBUI config={{
         serverUrl:'http://localhost:6789',
         tenant: 'default_tenant',     
         database: 'default_database'
-      }}></ChromaDBUI>
+      }}></ChromaDBUI> */}
     </div>
   );
 }

@@ -15,7 +15,8 @@ class OllamaEmbeddingFunction(EmbeddingFunction):
         
     def __call__(self, texts: List[str]) -> List[List[float]]:
         try:
-            return self.ollama_embeddings.embed_documents(texts)
+            embeding = self.ollama_embeddings.embed_documents(texts)
+            return embeding
         except Exception as e:
             logger.error(f"Error generating embeddings: {e}")
             raise

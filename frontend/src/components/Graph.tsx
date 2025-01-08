@@ -1,7 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
 import cytoscape from 'cytoscape';
 import cola from 'cytoscape-cola';
+import tippy from 'tippy.js';
+import 'tippy.js/dist/tippy.css'
 import { createElements, graphStyles } from '../utils/cytoscape';
 import { useGraphControls } from '../hooks/useGraphControls';
 import { defaultLayoutOptions } from '../utils/layout';
@@ -20,6 +22,35 @@ const Graph = ({ data }) => {
     handleFit,
     handleReset
   } = useGraphControls(cyRef);
+
+  useEffect(()=>{
+if(cyRef.current){
+  const cy = cyRef.current;
+
+  cy.on('mouseover','node',(e)=>{
+const node = e?.target;
+const nodeData = node.data();
+
+tippy(
+  node.popperRef(),{
+    content:`
+    <strong>Label:</strong> ${nodeData.Label}<br>
+                <strong>Type:</strong> ${nodeData.type}<br>
+            <strong>ID:</strong> ${nodeData.id}
+    `,
+    allowHTML:true,
+    arrow:true,
+    placement:'top'
+  }
+)
+
+  })
+
+  cy.on('mouseout','node',()=>{
+    tippy.destroy()
+  })
+}
+  },[])
 
   if(!(data.entities.length>0 || data.relationships.length>0)) return
 

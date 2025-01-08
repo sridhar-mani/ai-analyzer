@@ -19,16 +19,18 @@ class CaseProcessor:
 
         self.embedding_function = OllamaEmbeddingFunction("nomic-embed-text")
 
-        self.collection = self._initialize_collection()
-
-        if not self.validate_collection():
-            logger.error("Collection validation failed - RAG may not work properly")
-# text splitter for chunking large docs
         self.text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=500,
             chunk_overlap = 50,
             separators = ['\n\n','\n',' ','','. ']
         )
+
+        self.collection = self._initialize_collection()
+
+        if not self.validate_collection():
+            logger.error("Collection validation failed - RAG may not work properly")
+# text splitter for chunking large docs
+      
         self.case_types ={
             'THEFT': ['theft', 'stolen', 'robbery', 'burglary'],
             'DRUG_TRAFFICKING': ['drug', 'narcotics', 'trafficking'],
@@ -51,8 +53,7 @@ class CaseProcessor:
                 embedding_function=self.embedding_function
             )
             logger.info('created new cases collection')
-            # Add initial cases
-                    # Synthetic initial cases with detailed entity information
+
             initial_cases = {
             'CYBERCRIME': {
                 'content': """Investigation revealed a coordinated attack on quantum banking networks by the 
@@ -252,6 +253,8 @@ class CaseProcessor:
             metadatas= []
             ids =[]
 
+            print(initial_cases.items())
+
             for idx, (case_type, case_data) in enumerate(initial_cases.items()):
                 chunks = self.text_splitter.split_text(case_data['content'])
                 for chunk_idx, chunk in enumerate(chunks):
@@ -284,6 +287,12 @@ class CaseProcessor:
             seen_contents = set()
 
             for chunk_idx,chunk in enumerate(content_chunks):
+                test_query = self.collection.query(
+    query_texts=["stolen vehicle red Honda Accord"],
+    n_results=2,
+    where={"type": "THEFT"}
+)
+                collection_data = self.collection.peek(limit=5)
                 results = self.collection.query(
                     query_texts=[chunk],
                     n_results=n_results*2,

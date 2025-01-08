@@ -19,7 +19,7 @@ export const createElements = (data: GraphData): cytoscape.ElementDefinition[] =
       id: rel.id,
       source: rel.source,
       target: rel.target,
-      label: rel.label,
+      label: rel.type,
     },
   }));
 
