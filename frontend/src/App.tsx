@@ -19,13 +19,26 @@ function App() {
     setAnalysisStatus
   } = useAiStore();
 
-  const handleFilesSelected = useCallback(async (files: FileList) => {
+  const handleFilesSelected = useCallback(async (files: any) => {
     setAnalysisStatus("analyzing");
+
+
     const formData = new FormData();
-    Array.from(files).forEach((f) => {
-      formData.append("files", f);
-      console.log("sending file", f.name);
-    });
+    
+
+    if(typeof files==="object"){
+      Object.entries(files).forEach(([key,value])=>{
+        formData.append(key as string,value as string)
+      })
+      console.log(formData)
+    }else{
+      Array.from(files).forEach((f) => {
+        formData.append("files", f);
+        console.log("sending file", f.name);
+      });
+    }
+
+   
     try {
       const res = await fetch("http://localhost:8380/analyze", {
         method: "POST",

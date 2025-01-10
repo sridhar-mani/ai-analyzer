@@ -6,15 +6,15 @@ import { createElements, graphStyles } from '../utils/cytoscape';
 import { useGraphControls } from '../hooks/useGraphControls';
 import { defaultLayoutOptions } from '../utils/layout';
 import Controls from './Controls';
-import { Tooltip as ReactTooltip } from 'react-tooltip'
+import { Tooltip as ReactTooltip } from 'react-tooltip';
 
 cytoscape.use(cola);
-
 
 const Graph = ({ data }) => {
   const cyRef = useRef<cytoscape.Core | null>(null);
   const [tooltipContent, setTooltipContent] = useState(''); 
-  
+  const [tooltipVisible, setTooltipVisible] = useState(false);
+
   const {
     handleZoomIn,
     handleZoomOut,
@@ -22,10 +22,10 @@ const Graph = ({ data }) => {
     handleReset
   } = useGraphControls(cyRef);
 
-  if(!(data.entities.length>0 || data.relationships.length>0)) return
+  if (!(data.entities.length > 0 || data.relationships.length > 0)) return null;
 
-  const handleNodeClick = (event)=>{
-    const node = event.target
+  const handleNodeClick = (event) => {
+    const node = event.target;
     const nodeData = node.data();
 
     setTooltipContent(`
@@ -33,9 +33,12 @@ const Graph = ({ data }) => {
       <strong>Type:</strong> ${nodeData.type}<br />
       <strong>ID:</strong> ${nodeData.id}
     `);
-
-    console.log(node);
-  }
+    
+    // Position the tooltip near the clicked node
+    const { x, y } = node.position();
+    ReactTooltip.show(document.getElementById(`node-${nodeData.id}`));
+    setTooltipVisible(true);
+  };
 
   return (
     <div className="w-full h-full relative">
@@ -45,7 +48,7 @@ const Graph = ({ data }) => {
         layout={defaultLayoutOptions}
         cy={(cy) => {
           cyRef.current = cy;
-          cy.on('tap','node',handleNodeClick)
+          cy.on('tap', 'node', handleNodeClick);
         }}
         className="w-full h-full"
       />
@@ -55,7 +58,17 @@ const Graph = ({ data }) => {
         onFit={handleFit}
         onReset={handleReset}
       />
-      <ReactTooltip place="top" type="dark" effect="float" id='node-tt' html={true} getContent={()=> tooltipContent} />
+      {tooltipVisible && (
+        <ReactTooltip 
+          place="top" 
+          type="dark" 
+          effect="float" 
+          id={`node-${data.id}`} 
+          html={true} 
+          getContent={() => tooltipContent} 
+          style={{ pointerEvents: 'none' }} 
+        />
+      )}
     </div>
   );
 };

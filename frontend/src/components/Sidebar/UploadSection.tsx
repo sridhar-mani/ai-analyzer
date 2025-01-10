@@ -13,6 +13,11 @@ const UploadSection: React.FC<UploadSectionProps> = ({
   onFilesSelected,
 }) => {
 
+
+  const [promtData,setPromptData] = useState({
+    headline:'',
+    content:''
+  })
   const { fileData,totalData,curCase,setFileData,setCurCase,setGraphData} =useAiStore()
 
   console.log(totalData,fileData);
@@ -68,24 +73,27 @@ const UploadSection: React.FC<UploadSectionProps> = ({
           <h2 className="text-xl text-center font-semibold text-gray-700 mb-3">
             Prompt Input
           </h2>
-          <div className="space-y-4">
+          <div className="space-y-4 mb-3">
             <div>
               <input
                 id="headline"
                 type="text"
                 placeholder="Enter headline"
                 className="block w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                onChange={(e)=>setPromptData({...promtData,headline:e.target.value.trim()})}
               />
             </div>
             <div>
               <textarea
                 id="content"
                 placeholder="Enter content"
-                className="block w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="block w-full p-2 border border-gray-300 rounded-lg focus:outline-none overflow-y-auto focus:ring-2 focus:ring-blue-400"
                 rows={6}
+                onChange={(e)=>setPromptData({...promtData,content:e.target.value.trim()})}
               />
             </div>
           </div>
+          <button className="self-center w-full p-2 bg-blue-500 rounded-md text-gray-50 hover:bg-blue-600" onClick={()=>onFilesSelected(promtData)}>Analyse Case</button>
         </div>
       )}
 
