@@ -29,8 +29,7 @@ class CaseProcessor:
 
         if not self.validate_collection():
             logger.error("Collection validation failed - RAG may not work properly")
-# text splitter for chunking large docs
-      
+
         self.case_types ={
             'THEFT': ['theft', 'stolen', 'robbery', 'burglary'],
             'DRUG_TRAFFICKING': ['drug', 'narcotics', 'trafficking'],

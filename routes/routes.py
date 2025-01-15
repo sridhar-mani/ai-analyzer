@@ -3,13 +3,14 @@ import ollama
 import logging
 import traceback
 from typing import List,Dict,Union, Optional
-from fastapi import File, UploadFile, HTTPException, APIRouter, Form, Request
+from fastapi import File, HTTPException, APIRouter, Form, Request
 from fastapi.responses import JSONResponse
 from models.models import CaseInfo
 from libs.prompt_and_parse import parse_response, create_extract_prompt
 from libs.file_reader import UniversalDocumentReader
 from libs.case_processor import CaseProcessor
 import hjson
+from starlette.datastructures import UploadFile
 
 
 logging.basicConfig(level=logging.DEBUG)
@@ -30,10 +31,8 @@ async def analyze_doc(request:Request) -> dict:
     data={}
     for key,value in dict(form_data).items():
         if isinstance(value,UploadFile):
-              file:UploadFile = await value.read()
-              files.append(file)
+              files.append(value)
         if isinstance(value,Dict):
-             file:Dict = value
              data = value
 
     try:
@@ -42,8 +41,13 @@ async def analyze_doc(request:Request) -> dict:
         print(data)
         if files:
             for f in files:
+
                 try:
-                    logger.debug(f"Processing file: {f.filename}")
+
+
+                    content = f.file.read()
+
+                    
 
                     
                     reader = UniversalDocumentReader(content, f.filename, f.file)
