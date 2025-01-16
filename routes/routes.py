@@ -32,8 +32,8 @@ async def analyze_doc(request:Request) -> dict:
     for key,value in dict(form_data).items():
         if isinstance(value,UploadFile):
               files.append(value)
-        if isinstance(value,Dict):
-             data = value
+        if isinstance(value,str):
+             data[key] = value
 
     try:
         all_analysis = []
@@ -220,7 +220,7 @@ async def analyze_doc(request:Request) -> dict:
             except Exception as e:
                             logger.error(f"Error processing case {case_id}: {str(e)}")
                             logger.error(traceback.format_exc())
-        
+            all_analysis.append(file_analysis)
         return ({
             "status":"success",
             "data":all_analysis
