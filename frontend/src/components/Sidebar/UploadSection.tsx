@@ -88,7 +88,7 @@ const UploadSection: React.FC<UploadSectionProps> = ({
                 id="content"
                 placeholder="Enter content"
                 className="block w-full p-2 border border-gray-300 rounded-lg focus:outline-none overflow-y-auto focus:ring-2 focus:ring-blue-400"
-                rows={6}
+                rows={5}
                 onChange={(e)=>setPromptData({...promtData,content:e.target.value.trim()})}
               />
             </div>

@@ -19,11 +19,13 @@ function App() {
     setAnalysisStatus
   } = useAiStore();
 
-  const handleFilesSelected = useCallback(async (files: any) => {
+  const handleFilesSelected = async (files: any) => {
     setAnalysisStatus("analyzing");
 
 
     const formData = new FormData();
+
+    console.log(analysisStatus)
     
 
     if(typeof files==="object"){
@@ -40,6 +42,8 @@ function App() {
 
    
     try {
+
+      console.log(formData)
       const res = await fetch("http://localhost:8380/analyze", {
         method: "POST",
         headers: {
@@ -71,7 +75,7 @@ function App() {
     setTimeout(() => {
       setAnalysisStatus("complete");
     }, 2000);
-  }, []);
+  }
 
   useEffect(()=>{
 

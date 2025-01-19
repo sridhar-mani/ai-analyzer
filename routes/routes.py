@@ -18,13 +18,15 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
+
+
 case_processor = CaseProcessor()
 
 MODELS = ["openhermes:latest", "mistral:instruct"]
 
 @router.post("/analyze")
 async def analyze_doc(request:Request) -> dict:
-
+    case_id=0
     form_data = await request.form()
     form_data = form_data.items()
     files =[]
@@ -59,12 +61,13 @@ async def analyze_doc(request:Request) -> dict:
                         "cases": []
                     }
                     
-                    for case_id, case_data in document_data.get('cases', {}).items():
+                    for c_id, case_data in document_data.get('cases', {}).items():
                         try:
-                            logger.debug(f"Processing case: {case_id}")
+                            
+                            logger.debug(f"Processing case: {c_id}")
                             case_content = case_data['content']
                             case_headline = case_data['headline']
-                            case_data['page_number'] = case_id
+                            case_data['page_number'] = c_id
 
                             initial_analysis = case_processor.analyze_case({
                                 'headline':case_headline,
@@ -114,14 +117,14 @@ async def analyze_doc(request:Request) -> dict:
                                                 )
                                                 break
                                         else:
-                                            logger.warning(f"Empty content for case {case_id} using model {model}")
+                                            logger.warning(f"Empty content for case {c_id} using model {model}")
                                     else:
-                                        logger.warning(f"No message attribute in response for case {case_id} using model {model}")
+                                        logger.warning(f"No message attribute in response for case {c_id} using model {model}")
                                 except Exception as e:
-                                    logger.warning(f"Error using model {model} for case {case_id}: {str(e)}")
+                                    logger.warning(f"Error using model {model} for case {c_id}: {str(e)}")
                             
                             case_info = CaseInfo(
-                                case_id=case_id,
+                                case_id=c_id,
                                 headline=case_headline,
                                 page_number=case_data['page_number'],
                                 content=case_content,
@@ -150,7 +153,6 @@ async def analyze_doc(request:Request) -> dict:
                             case_content = data['content']
                             case_headline = data['headline']
 
-                            print(case_content,case_headline)
 
                             initial_analysis = case_processor.analyze_case({
                                 'headline':case_headline,
@@ -182,9 +184,9 @@ async def analyze_doc(request:Request) -> dict:
                                             'content': full_prompt
                                         }],
                                         options={
-                                            "num_predict": 4096,
+                                            "num_predict": 8192,
                                             "stop": ["\n\n\n"],
-                                            "temperature": 0.7
+                                            "temperature": 0.3
                                         }
                                     )
                                     
@@ -209,7 +211,7 @@ async def analyze_doc(request:Request) -> dict:
                             case_info = CaseInfo(
                                 case_id=case_id,
                                 headline=case_headline,
-                                page_number=case_data['page_number'],
+                                page_number=1,
                                 content=case_content,
                                 ai_analysis=parsed_response
                             )

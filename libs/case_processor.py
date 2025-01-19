@@ -2,7 +2,6 @@ from typing import List, Dict, Any
 import re
 import json
 from langchain.text_splitter import RecursiveCharacterTextSplitter 
-from langchain_community.embeddings import OllamaEmbeddings
 import logging
 import chromadb
 from chromadb.config import Settings
@@ -13,14 +12,12 @@ logger = logging.getLogger(__name__)
 
 class CaseProcessor:
     def __init__(self,host: str = "localhost", port: int =6789):
-        
-# initializing chromadb (embedding client)
         self.client = chromadb.HttpClient(host=host,port=port)
 
         self.embedding_function = OllamaEmbeddingFunction("nomic-embed-text")
 
         self.text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=500,
+            chunk_size=2000,
             chunk_overlap = 50,
             separators = ['\n\n','\n',' ','','. ']
         )
@@ -30,13 +27,44 @@ class CaseProcessor:
         if not self.validate_collection():
             logger.error("Collection validation failed - RAG may not work properly")
 
-        self.case_types ={
-            'THEFT': ['theft', 'stolen', 'robbery', 'burglary'],
-            'DRUG_TRAFFICKING': ['drug', 'narcotics', 'trafficking'],
-            'FRAUD': ['fraud', 'scam', 'phishing', 'cheat'],
-            'GANG_ACTIVITY': ['gang', 'violence', 'street-fight'],
-            'CYBERCRIME': ['cyber', 'hack', 'malware', 'virus']
-        }
+        self.case_types = {
+    'THEFT': ['theft', 'stolen', 'robbery', 'burglary', 'larceny', 'pickpocketing', 'shoplifting', 'shoplifter', 'stealing'],
+    'DRUG_TRAFFICKING': ['drug', 'narcotics', 'trafficking', 'substance abuse', 'illegal drugs', 'smuggling', 'distribution'],
+    'FRAUD': ['fraud', 'scam', 'phishing', 'cheat', 'identity theft', 'embezzlement', 'counterfeit', 'deception', 'misrepresentation'],
+    'GANG_ACTIVITY': ['gang', 'violence', 'street-fight', 'gang-related', 'organized crime', 'gangster', 'criminal organization'],
+    'CYBERCRIME': ['cyber', 'hack', 'malware', 'virus', 'phishing', 'cyberbullying', 'data breach', 'ransomware', 'identity theft'],
+    'KIDNAP': ['missing', 'kidnap', 'abduction', 'hostage', 'child abduction', 'disappearance', 'forcible confinement'],
+    'HOMICIDE': ['homicide', 'murder', 'manslaughter', 'assassination', 'killing', 'death', 'murdered', 'slaying'],
+    'ASSAULT': ['assault', 'battery', 'attack', 'physical violence', 'domestic violence', 'beating', 'physical harm'],
+    'SEXUAL_OFFENSES': ['rape', 'sexual assault', 'molestation', 'indecent exposure', 'harassment', 'sexual harassment', 'groping'],
+    'ARSON': ['arson', 'fire', 'burning', 'firebombing', 'incendiary device', 'deliberate fire'],
+    'TERRORISM': ['terrorism', 'bombing', 'extremism', 'radicalization', 'terrorist attack', 'extremist', 'jihadist'],
+    'VANDALISM': ['vandalism', 'graffiti', 'property damage', 'defacement', 'destruction', 'criminal mischief'],
+    'PUBLIC_DISTURBANCE': ['public disturbance', 'riot', 'protest', 'unlawful assembly', 'loitering', 'disorderly conduct', 'demonstration'],
+    'TRAFFICKING': ['human trafficking', 'sex trafficking', 'labor trafficking', 'exploitation', 'forced labor', 'child trafficking'],
+    'BRIBERY': ['bribery', 'corruption', 'kickbacks', 'payoffs', 'illegal payment'],
+    'EXTORTION': ['extortion', 'blackmail', 'coercion', 'threats', 'forced payment'],
+    'WEAPONS_OFFENSE': ['illegal weapons', 'firearms', 'gun violence', 'arms trafficking', 'concealed weapons'],
+    'MISSING_PERSON': ['missing person', 'runaway', 'lost', 'disappearance', 'unaccounted for', 'abducted person'],
+    'ROAD_CRIMES': ['hit and run', 'reckless driving', 'drunk driving', 'traffic violation', 'vehicular manslaughter', 'road rage'],
+    'SMUGGLING': ['smuggling', 'contraband', 'illegal trade', 'bootlegging', 'trafficking'],
+    'ESPIONAGE': ['espionage', 'spying', 'intelligence theft', 'leaking information'],
+    'HATE_CRIME': ['hate crime', 'racial violence', 'bias-motivated crime', 'hate speech', 'discrimination'],
+    'FORGERY': ['forgery', 'document falsification', 'check fraud', 'signature fraud'],
+    'ESCAPE': ['prison escape', 'jailbreak', 'fugitive', 'escapee', 'flight from custody'],
+    'TRESPASSING': ['trespassing', 'unauthorized entry', 'illegal occupancy', 'breaking and entering'],
+    'STALKING': ['stalking', 'cyberstalking', 'harassment', 'obsessive behavior', 'persistent following'],
+    'ENVIRONMENTAL_CRIME': ['environmental crime', 'illegal dumping', 'pollution', 'wildlife trafficking', 'illegal fishing'],
+    'VIOLATION_OF_ORDER': ['restraining order violation', 'protection order violation', 'no-contact order violation'],
+    'CHILD_ABUSE': ['child abuse', 'child neglect', 'child endangerment', 'child exploitation', 'child maltreatment'],
+    'ANIMAL_CRUELTY': ['animal cruelty', 'animal abuse', 'illegal poaching', 'animal neglect', 'inhumane treatment'],
+    'FINANCIAL_CRIMES': ['money laundering', 'tax evasion', 'insider trading', 'financial fraud', 'embezzlement'],
+    'COUNTERFEITING': ['counterfeiting', 'fake currency', 'imitation goods', 'piracy', 'counterfeit goods'],
+    'HOSTAGE_SITUATION': ['hostage situation', 'barricade incident', 'hostage standoff', 'kidnapping for ransom'],
+    'SLANDER_OR_LIBEL': ['defamation', 'slander', 'libel', 'character assassination', 'false accusations'],
+}
+
+
 
     def _initialize_collection(self):
         try:
@@ -359,7 +387,7 @@ class CaseProcessor:
         try:
             chunks  = self.text_splitter.split_text(case_content)
             for idx,chk in enumerate(chunks):
-                case_id=f"case_{hash(case_content)(idx)}"
+                case_id = f"case_{hash(case_content)}_{idx}" 
                 
                 self.collection.add(
                 documents=[chk],
@@ -417,14 +445,44 @@ class CaseProcessor:
 
     def detect_cases_types(self, content:str)-> str:
         content = [ line.lower() for line in content if len(content)!=0]
-        matches={
-            'THEFT': 0,
-            'DRUG_TRAFFICKING':0,
-            'FRAUD': 0,
-            'GANG_ACTIVITY': 0,
-            'CYBERCRIME':0
-        }
-            
+        matches = {
+    'THEFT': 0,
+    'DRUG_TRAFFICKING': 0,
+    'FRAUD': 0,
+    'GANG_ACTIVITY': 0,
+    'CYBERCRIME': 0,
+    'KIDNAP': 0,
+    'HOMICIDE': 0,
+    'ASSAULT': 0,
+    'SEXUAL_OFFENSES': 0,
+    'ARSON': 0,
+    'TERRORISM': 0,
+    'VANDALISM': 0,
+    'PUBLIC_DISTURBANCE': 0,
+    'TRAFFICKING': 0,
+    'BRIBERY': 0,
+    'EXTORTION': 0,
+    'WEAPONS_OFFENSE': 0,
+    'MISSING_PERSON': 0,
+    'ROAD_CRIMES': 0,
+    'SMUGGLING': 0,
+    'ESPIONAGE': 0,
+    'HATE_CRIME': 0,
+    'FORGERY': 0,
+    'ESCAPE': 0,
+    'TRESPASSING': 0,
+    'STALKING': 0,
+    'ENVIRONMENTAL_CRIME': 0,
+    'VIOLATION_OF_ORDER': 0,
+    'CHILD_ABUSE': 0,
+    'ANIMAL_CRUELTY': 0,
+    'FINANCIAL_CRIMES': 0,
+    'COUNTERFEITING': 0,
+    'HOSTAGE_SITUATION': 0,
+    'SLANDER_OR_LIBEL': 0,
+}
+
+
         
         for case_type, patterns in self.case_types.items():
             for each_line in content:
@@ -436,7 +494,9 @@ class CaseProcessor:
     
     def analyze_case(self,case:Dict[str,Any]) -> Dict[str,Any]:
 
-        content = [ line.lower() for line in case['content'] if len(case['content'])!=0]
+        content = case['headline']+" "+" ".join(case['content'])
+
+        content = [ line.lower() for line in content if len(content)!=0]
         
         case_type = self.detect_cases_types(content)
 
