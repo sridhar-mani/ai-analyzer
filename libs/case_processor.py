@@ -385,6 +385,9 @@ class CaseProcessor:
 
     def store_successful_case(self,case_content: str,case_type: str,analysis:Dict[str,Any]):
         try:
+            if isinstance(case_content, list):
+                case_content = " ".join(case_content)
+
             chunks  = self.text_splitter.split_text(case_content)
             for idx,chk in enumerate(chunks):
                 case_id = f"case_{hash(case_content)}_{idx}" 

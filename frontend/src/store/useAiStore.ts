@@ -2,7 +2,8 @@ import { create } from "zustand";
 
 type Entity = {
   id: string;
-  label: string;
+  label?: string;
+  name?:string;
   type?: string;
   isAnomaly?: boolean;
   location?:string;

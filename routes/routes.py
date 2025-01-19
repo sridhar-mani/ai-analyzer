@@ -11,7 +11,7 @@ from libs.file_reader import UniversalDocumentReader
 from libs.case_processor import CaseProcessor
 import hjson
 from starlette.datastructures import UploadFile
-
+import re
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -150,8 +150,16 @@ async def analyze_doc(request:Request) -> dict:
         
         if data:
             try:
+
                             case_content = data['content']
                             case_headline = data['headline']
+
+                            file_analysis = {
+                        "filename": "Prompted",
+                        "cases": []
+                    }
+
+                            case_content = re.split(r'(?<=[.!?])\s+',case_content)
 
 
                             initial_analysis = case_processor.analyze_case({
@@ -222,10 +230,9 @@ async def analyze_doc(request:Request) -> dict:
             except Exception as e:
                             logger.error(f"Error processing case {case_id}: {str(e)}")
                             logger.error(traceback.format_exc())
-            all_analysis.append(file_analysis)
         return ({
             "status":"success",
-            "data":all_analysis
+            "data":[file_analysis]
         })
     
     except Exception as e:

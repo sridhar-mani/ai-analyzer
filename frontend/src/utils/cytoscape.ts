@@ -6,7 +6,7 @@ export const createElements = (data: GraphData): cytoscape.ElementDefinition[] =
     group: 'nodes',
     data: {
       id: entity.id,
-      label: entity.label,
+      label: entity.label || entity.name,
       type: entity.type,
       isAnomaly: entity.isAnomaly,
       propertyType: entity.propertyType, 
