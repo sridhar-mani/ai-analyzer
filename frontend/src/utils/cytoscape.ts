@@ -1,5 +1,7 @@
 import cytoscape, { Stylesheet } from 'cytoscape';
 import { GraphData } from '../store/useAiStore';
+import 'tippy.js/dist/tippy.css';
+import tippy from 'tippy.js';
 
 export const createElements = (data: GraphData): cytoscape.ElementDefinition[] => {
   const nodes = data.entities.map((entity) => ({
@@ -178,5 +180,78 @@ export const initializeGraph = (container: HTMLElement, data: GraphData) => {
     },
   });
 
+  const toolTip = document.createElement("div")
+  toolTip.classList.add('bg-gray-800', 'text-white', 'p-4', 'rounded-lg', 'shadow-lg', 'max-w-sm')
+
+  const tip = tippy(
+    container,{
+      content: toolTip,
+      trigger: 'manual',
+      interactive: true,
+      arrow: true,
+      placement: 'top',
+      hideOnClick: true,
+      theme: 'custom',
+    }
+  )
+
+  cy.on(
+    'tap','node', function(evt) {
+    const node = evt.target;
+    const nodeData = node.data();
+    
+    // Create tooltip content
+    toolTip.innerHTML = `
+      <div class="space-y-2">
+        <h3 class="font-semibold">${nodeData.label}</h3>
+        <div class="text-sm">
+          <p><span class="font-medium">Type:</span> ${nodeData.type}</p>
+          ${nodeData.propertyType ? `<p><span class="font-medium">Property Type:</span> ${nodeData.propertyType}</p>` : ''}
+          ${nodeData.isAnomaly ? '<p class="text-red-400 font-medium">⚠️ Anomaly Detected</p>' : ''}
+        </div>
+      </div>
+    `;
+
+    // Position tooltip near the node
+    const renderedPosition = node.renderedPosition();
+    const containerBox = container.getBoundingClientRect();
+    
+    tip.setProps({
+      getReferenceClientRect: () => ({
+        width: 0,
+        height: 0,
+        left: containerBox.left + renderedPosition.x,
+        right: containerBox.left + renderedPosition.x,
+        top: containerBox.top + renderedPosition.y,
+        bottom: containerBox.top + renderedPosition.y,
+      }),
+    });
+
+    tip.show();
+  }
+  )
+
+  cy.on('tap', function(evt) {
+    if (evt.target === cy) {
+      tip.hide();
+    }
+  });
+
   return cy;
 };
+
+
+const tooltipStyles = `
+.tippy-box[data-theme~='custom'] {
+  background-color: #1f2937;
+  color: white;
+}
+
+.tippy-box[data-theme~='custom'][data-placement^='top'] > .tippy-arrow::before {
+  border-top-color: #1f2937;
+}
+`;
+
+const styleSheet = document.createElement('style');
+styleSheet.textContent = tooltipStyles;
+document.head.appendChild(styleSheet);

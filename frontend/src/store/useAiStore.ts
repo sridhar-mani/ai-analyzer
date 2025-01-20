@@ -65,10 +65,14 @@ interface Store {
   setCurCase: (cur: number) => void;
   graphData: GraphData;
   setGraphData: (graphData: GraphData) => void;
-  addFileData: (file: FileData)=> void
+  addFileData: (file: FileData)=> void;
+  model : any;
+  setModel: (model: any) =>void
 }
 
 const useAiStore = create<Store>((set) => ({
+  model :null,
+  setModel: (curModel) => set({model:curModel}),
   fileData: { filename: "", cases: [] },
   analysisStatus: "idle",
   totalData: { datas: [] },

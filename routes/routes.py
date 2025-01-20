@@ -192,7 +192,7 @@ async def analyze_doc(request:Request) -> dict:
                                             'content': full_prompt
                                         }],
                                         options={
-                                            "num_predict": 8192,
+                                            "num_predict": 4096,
                                             "stop": ["\n\n\n"],
                                             "temperature": 0.3
                                         }

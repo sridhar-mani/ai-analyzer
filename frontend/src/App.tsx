@@ -4,6 +4,8 @@ import MainContent from "./components/MainContent";
 import useAiStore from "./store/useAiStore";
 import { sanitizeGraphData } from "./utils/validation";
 import {ChromaDBUI} from '@sridhar-mani/chromadb-ui'
+import * as webllm from "@mlc-ai/web-llm";
+import { isMobile } from "react-device-detect";
 
 function App() {
   const {
@@ -16,8 +18,16 @@ function App() {
     graphData,
     setGraphData,
     analysisStatus,
-    setAnalysisStatus
+    setAnalysisStatus,
+    model,
+    setModel
   } = useAiStore();
+
+  const aiModel = async ()=>{
+    const computerAiModel = await webllm.CreateWebWorkerMLCEngine(
+      new Worker(new URL('./utils/worker.ts'))
+    )
+  }
 
   const handleFilesSelected = async (files: any) => {
     setAnalysisStatus("analyzing");
@@ -51,6 +61,13 @@ function App() {
         },
         body: formData,
       });
+
+
+      console.log(isMobile)
+
+      if(typeof res!=="object"){
+        console.log(isMobile)
+      }
 
       
 
