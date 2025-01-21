@@ -50,7 +50,7 @@ Investigation: The phase where authorities or investigators begin their work, su
 Intervention/Execution: Significant actions happen, such as arrests, raids, or the interception of a communication.
 Reporting/Resolution: The final phase where results are made public, the event concludes, and outcomes like arrests or dismantling of criminal activity are announced.
 Example Input:
-"A multi-state drug trafficking operation was uncovered during an extensive investigation by federal authorities. The investigation started when a suspicious van was seen in a remote warehouse area, and further surveillance led to the discovery of drugs worth millions of dollars. Authorities traced the drugs back to a major distributor operating across state lines. Several arrests were made, and more suspects are under investigation. The authorities have urged the public to stay vigilant and report any suspicious activities."
+"A multi-state drug trafficking operation was uncovered during an extensive investigation by federal authorities. The investigation started when a suspicious van was seen in a remote warehouse area by witness(Thor), and further surveillance led to the discovery of drugs worth millions of dollars. Authorities include Officer Vikhram traced the drugs back to a major distributor operating across state lines. Several arrests were made, and more suspects such as Daniel are under investigation. The authorities have urged the public to stay vigilant and report any suspicious activities."
 
 Make sure the source are target of each edge is present as a node in the node array without any repitition. Make sure to keep the processing of one data from another so that you don't repeat any responce for each case.
 
@@ -60,21 +60,21 @@ json
   "nodes": [
     {
       "id": "Witness",
-      "label": "Witness",
+      "label": "Thor",
       "type": "Person",
       "location": "Warehouse Area",
       "contact": "Phone Number or Anonymous"
     },
     {
       "id": "Suspect",
-      "label": "Suspect",
+      "label": "Daniel",
       "type": "Person",
       "location": "State X",
       "affiliation": "Criminal Organization"
     },
     {
       "id": "Investigator",
-      "label": "Federal Authorities",
+      "label": "Officer Vikhram",
       "type": "Organization",
       "location": "Headquarters"
     },

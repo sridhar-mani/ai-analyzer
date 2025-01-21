@@ -22,7 +22,7 @@ router = APIRouter()
 
 case_processor = CaseProcessor()
 
-MODELS = ["openhermes:latest", "mistral:instruct"]
+MODELS = ["deepseek-r1:8b","openhermes:latest", "mistral:instruct"]
 
 @router.post("/analyze")
 async def analyze_doc(request:Request) -> dict:
@@ -101,8 +101,76 @@ async def analyze_doc(request:Request) -> dict:
                                         options={
                                             "num_predict": 4096,
                                             "stop": ["\n\n\n"],
-                                            "temperature": 0.7
-                                        }
+                                            "temperature": 0
+                                        },
+                                     format={
+        "type": "object",
+        "properties": {
+            "nodes": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "string",
+                            "description": "Unique identifier for the node"
+                        },
+                        "label": {
+                            "type": "string",
+                            "description": "Display name or label for the node"
+                        },
+                        "type": {
+                            "type": "string",
+                            "description": "Type of entity (Person, Organization, Object, etc.)"
+                        },
+                        "location": {
+                            "type": "string",
+                            "description": "Location associated with the entity"
+                        },
+                        "contact": {
+                            "type": "string",
+                            "description": "Contact information if available"
+                        },
+                        "affiliation": {
+                            "type": "string",
+                            "description": "Any organizational affiliations"
+                        },
+                        "value": {
+                            "type": "string",
+                            "description": "Value or amount if applicable"
+                        }
+                    },
+                    "required": ["id", "label", "type", "location"]
+                }
+            },
+            "edges": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "source": {
+                            "type": "string",
+                            "description": "ID of the source node"
+                        },
+                        "target": {
+                            "type": "string",
+                            "description": "ID of the target node"
+                        },
+                        "type": {
+                            "type": "string",
+                            "description": "Type of relationship"
+                        },
+                        "relationship_strength": {
+                            "type": "string",
+                            "description": "Strength of the relationship (High, Medium, Low)"
+                        }
+                    },
+                    "required": ["source", "target", "type", "relationship_strength"]
+                }
+            }
+        },
+        "required": ["nodes", "edges"]
+    }
                                     )
                                     
                                     if hasattr(response, 'message'):
