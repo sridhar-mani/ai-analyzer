@@ -22,7 +22,7 @@ router = APIRouter()
 
 case_processor = CaseProcessor()
 
-MODELS = ["deepseek-r1:8b","openhermes:latest", "mistral:instruct"]
+MODELS = ["deepseek-r1","openhermes:latest", "mistral:instruct"]
 
 @router.post("/analyze")
 async def analyze_doc(request:Request) -> dict:
@@ -33,9 +33,9 @@ async def analyze_doc(request:Request) -> dict:
     data={}
     for key,value in dict(form_data).items():
         if isinstance(value,UploadFile):
-              files.append(value)
+            files.append(value)
         if isinstance(value,str):
-             data[key] = value
+            data[key] = value
 
     try:
         all_analysis = []
