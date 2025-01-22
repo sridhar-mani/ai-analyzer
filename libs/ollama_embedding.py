@@ -10,7 +10,7 @@ class OllamaEmbeddingFunction(EmbeddingFunction):
     def __init__(self, model_name: str = "nomic-embed-text"):
         self.ollama_embeddings = OllamaEmbeddings(
             model=model_name,
-            model_kwargs={"device": "cuda"}
+            model_kwargs={"device": "cuda","output_dim": 768}
         )
         
     def __call__(self, texts: List[str]) -> List[List[float]]:

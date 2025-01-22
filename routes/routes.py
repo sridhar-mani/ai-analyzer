@@ -13,6 +13,7 @@ import hjson
 from starlette.datastructures import UploadFile
 import re
 
+
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
@@ -22,7 +23,7 @@ router = APIRouter()
 
 case_processor = CaseProcessor()
 
-MODELS = ["deepseek-r1","openhermes:latest", "mistral:instruct"]
+MODELS = ["deepseek-r1:8b","openhermes:latest", "mistral:instruct"]
 
 @router.post("/analyze")
 async def analyze_doc(request:Request) -> dict:
@@ -46,11 +47,7 @@ async def analyze_doc(request:Request) -> dict:
 
                 try:
 
-
                     content = f.file.read()
-
-                    
-
                     
                     reader = UniversalDocumentReader(content, f.filename, f.file)
                     document_data = reader.process_document()

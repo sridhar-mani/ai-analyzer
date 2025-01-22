@@ -22,6 +22,12 @@ function App() {
     setModel
   } = useAiStore();
 
+
+  navigator.storage.persist().then((granted) => {
+    console.log(granted ? 'Persistent storage granted' : 'Persistent storage denied');
+  });
+  
+  
   const aiModel = ()=>{
   }
 
